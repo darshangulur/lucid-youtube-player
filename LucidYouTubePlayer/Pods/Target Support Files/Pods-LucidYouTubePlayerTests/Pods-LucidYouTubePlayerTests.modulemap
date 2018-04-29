@@ -1,0 +1,6 @@
+framework module Pods_LucidYouTubePlayerTests {
+  umbrella header "Pods-LucidYouTubePlayerTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
