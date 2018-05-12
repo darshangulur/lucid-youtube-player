@@ -21,9 +21,6 @@ class ViewController: UIViewController {
         pathString.append("&maxResults=50")
         pathString.append("&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw")
         Alamofire.request(pathString).responseJSON { response in
-//            print("Request: \(String(describing: response.request))")   // original url request
-//            print("Response: \(String(describing: response.response))") // http url response
-//            print("Result: \(response.result)")                         // response serialization result
 
             if let json = response.result.value {
                 print("JSON: \(json)") // serialized json response
@@ -37,7 +34,7 @@ class ViewController: UIViewController {
         self.view.addSubview(playerView)
         playerView.frame = view.frame
 
-        if playerView.load(withVideoId: "IalXtkOdlKg") {
+        if playerView.load(withVideoId: "R6yQBZlcNSw") {
             playerView.delegate = self
         }
     }
