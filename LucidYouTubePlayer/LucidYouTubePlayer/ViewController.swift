@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+import TinyConstraints
 import youtube_ios_player_helper
 
 class ViewController: UIViewController {
@@ -15,33 +15,27 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var pathString = "https://www.googleapis.com/youtube/v3/playlistItems"
-        pathString.append("?part=snippet")
-        pathString.append("&playlistId=PLOU2XLYxmsILwYAhwWBBdDEytdnE0d2-E")
-        pathString.append("&maxResults=50")
-        pathString.append("&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw")
-        Alamofire.request(pathString).responseJSON { response in
-
-            if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
-            }
-
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)") // original server data as UTF8 string
-            }
+        let playlistRepository: PlaylistSourcing = PlaylistRepository()
+        playlistRepository.fetchPlaylist(forURL: URL(string: "https://www.google.com")!) { responseModel in
+            print("\(responseModel?.pageInfo ?? nil)")
         }
-
-        self.view.addSubview(playerView)
-        playerView.frame = view.frame
-
-        if playerView.load(withVideoId: "R6yQBZlcNSw") {
-            playerView.delegate = self
-        }
+//        playVideo()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    private func addSubViews() {
+        self.view.addSubview(playerView)
+        playerView.edgesToSuperview()
+    }
+
+    private func playVideo() {
+        if playerView.load(withVideoId: "R6yQBZlcNSw") {
+            playerView.delegate = self
+        }
     }
 }
 

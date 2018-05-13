@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		28596AA9B47789143167BEDE /* Pods_LucidYouTubePlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 338F7B35B76C22A9B512CDC7 /* Pods_LucidYouTubePlayer.framework */; };
 		AAD9FF791A72AA2E7E1F14D1 /* Pods_LucidYouTubePlayerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1580D83EDAFB44A7778983A2 /* Pods_LucidYouTubePlayerTests.framework */; };
+		E0128C3420A75BB9004E3871 /* PlaylistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3320A75BB9004E3871 /* PlaylistRepository.swift */; };
+		E0128C4320A75F21004E3871 /* ContentDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3820A75F21004E3871 /* ContentDetails.swift */; };
+		E0128C4420A75F21004E3871 /* ResourceId.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3920A75F21004E3871 /* ResourceId.swift */; };
+		E0128C4520A75F21004E3871 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3A20A75F21004E3871 /* Item.swift */; };
+		E0128C4620A75F21004E3871 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3B20A75F21004E3871 /* Snippet.swift */; };
+		E0128C4720A75F21004E3871 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3C20A75F21004E3871 /* Default.swift */; };
+		E0128C4820A75F21004E3871 /* High.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3D20A75F21004E3871 /* High.swift */; };
+		E0128C4920A75F21004E3871 /* PlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3E20A75F21004E3871 /* PlaylistResponse.swift */; };
+		E0128C4A20A75F21004E3871 /* Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C3F20A75F21004E3871 /* Standard.swift */; };
+		E0128C4B20A75F21004E3871 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C4020A75F21004E3871 /* PageInfo.swift */; };
+		E0128C4C20A75F21004E3871 /* Thumbnails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C4120A75F21004E3871 /* Thumbnails.swift */; };
+		E0128C4D20A75F21004E3871 /* Medium.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0128C4220A75F21004E3871 /* Medium.swift */; };
 		E0243B5D2085810C0020AC6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0243B5C2085810C0020AC6F /* AppDelegate.swift */; };
 		E0243B5F2085810C0020AC6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0243B5E2085810C0020AC6F /* ViewController.swift */; };
 		E0243B622085810C0020AC6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0243B602085810C0020AC6F /* Main.storyboard */; };
@@ -35,6 +47,18 @@
 		4AEA2B6E54B767F7E672A45B /* Pods-LucidYouTubePlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayerTests/Pods-LucidYouTubePlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5893FC3134AA9B6489D1C2AE /* Pods-LucidYouTubePlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayer/Pods-LucidYouTubePlayer.release.xcconfig"; sourceTree = "<group>"; };
 		B9DD243524F515E172AC570E /* Pods-LucidYouTubePlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayerTests/Pods-LucidYouTubePlayerTests.release.xcconfig"; sourceTree = "<group>"; };
+		E0128C3320A75BB9004E3871 /* PlaylistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepository.swift; sourceTree = "<group>"; };
+		E0128C3820A75F21004E3871 /* ContentDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentDetails.swift; sourceTree = "<group>"; };
+		E0128C3920A75F21004E3871 /* ResourceId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceId.swift; sourceTree = "<group>"; };
+		E0128C3A20A75F21004E3871 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E0128C3B20A75F21004E3871 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
+		E0128C3C20A75F21004E3871 /* Default.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
+		E0128C3D20A75F21004E3871 /* High.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = High.swift; sourceTree = "<group>"; };
+		E0128C3E20A75F21004E3871 /* PlaylistResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistResponse.swift; sourceTree = "<group>"; };
+		E0128C3F20A75F21004E3871 /* Standard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Standard.swift; sourceTree = "<group>"; };
+		E0128C4020A75F21004E3871 /* PageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
+		E0128C4120A75F21004E3871 /* Thumbnails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnails.swift; sourceTree = "<group>"; };
+		E0128C4220A75F21004E3871 /* Medium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium.swift; sourceTree = "<group>"; };
 		E0243B592085810C0020AC6F /* LucidYouTubePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LucidYouTubePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0243B5C2085810C0020AC6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0243B5E2085810C0020AC6F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +113,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E0128C3520A75E85004E3871 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E0128C3720A75F21004E3871 /* Models */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		E0128C3720A75F21004E3871 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E0128C3820A75F21004E3871 /* ContentDetails.swift */,
+				E0128C3920A75F21004E3871 /* ResourceId.swift */,
+				E0128C3A20A75F21004E3871 /* Item.swift */,
+				E0128C3B20A75F21004E3871 /* Snippet.swift */,
+				E0128C3C20A75F21004E3871 /* Default.swift */,
+				E0128C3D20A75F21004E3871 /* High.swift */,
+				E0128C3E20A75F21004E3871 /* PlaylistResponse.swift */,
+				E0128C3F20A75F21004E3871 /* Standard.swift */,
+				E0128C4020A75F21004E3871 /* PageInfo.swift */,
+				E0128C4120A75F21004E3871 /* Thumbnails.swift */,
+				E0128C4220A75F21004E3871 /* Medium.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E0243B502085810C0020AC6F = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +162,7 @@
 		E0243B5B2085810C0020AC6F /* LucidYouTubePlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E0128C3520A75E85004E3871 /* API */,
 				E0243B5C2085810C0020AC6F /* AppDelegate.swift */,
 				E0243B5E2085810C0020AC6F /* ViewController.swift */,
 				E0243B602085810C0020AC6F /* Main.storyboard */,
@@ -119,6 +170,7 @@
 				E0243B652085810E0020AC6F /* LaunchScreen.storyboard */,
 				E0243B682085810E0020AC6F /* Info.plist */,
 				E04F796F208584F100E31C0C /* GoogleService-Info.plist */,
+				E0128C3320A75BB9004E3871 /* PlaylistRepository.swift */,
 			);
 			path = LucidYouTubePlayer;
 			sourceTree = "<group>";
@@ -303,8 +355,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0128C4320A75F21004E3871 /* ContentDetails.swift in Sources */,
+				E0128C4620A75F21004E3871 /* Snippet.swift in Sources */,
+				E0128C4B20A75F21004E3871 /* PageInfo.swift in Sources */,
+				E0128C4420A75F21004E3871 /* ResourceId.swift in Sources */,
+				E0128C4D20A75F21004E3871 /* Medium.swift in Sources */,
+				E0128C4920A75F21004E3871 /* PlaylistResponse.swift in Sources */,
 				E0243B5F2085810C0020AC6F /* ViewController.swift in Sources */,
+				E0128C3420A75BB9004E3871 /* PlaylistRepository.swift in Sources */,
+				E0128C4720A75F21004E3871 /* Default.swift in Sources */,
+				E0128C4820A75F21004E3871 /* High.swift in Sources */,
+				E0128C4A20A75F21004E3871 /* Standard.swift in Sources */,
+				E0128C4520A75F21004E3871 /* Item.swift in Sources */,
 				E0243B5D2085810C0020AC6F /* AppDelegate.swift in Sources */,
+				E0128C4C20A75F21004E3871 /* Thumbnails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +534,10 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = LucidYouTubePlayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.lucid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -488,7 +555,10 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = LucidYouTubePlayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.lucid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -505,7 +575,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6FYUH29G;
 				INFOPLIST_FILE = LucidYouTubePlayerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucid.LucidYouTubePlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -523,7 +597,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6FYUH29G;
 				INFOPLIST_FILE = LucidYouTubePlayerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucid.LucidYouTubePlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
