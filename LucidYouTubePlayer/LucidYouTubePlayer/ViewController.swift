@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let playlistRepository: PlaylistSourcing = PlaylistRepository()
         playlistRepository.fetchPlaylist(forURL: URL(string: "https://www.google.com")!) { responseModel in
-            print("\(responseModel?.pageInfo ?? nil)")
+//            print("\(responseModel?.pageInfo ?? nil)")
         }
 //        playVideo()
     }
