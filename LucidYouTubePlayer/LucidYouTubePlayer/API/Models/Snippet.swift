@@ -16,14 +16,14 @@ import Foundation
 struct Snippet : Codable {
 	let title : String
 	let description : String
-	let thumbnails : Thumbnails
+//    let thumbnails : Thumbnails
 	let channelTitle : String
 	let playlistId : String
 
 	enum CodingKeys: String, CodingKey {
 		case title
 		case description
-		case thumbnails
+//        case thumbnails
 		case channelTitle
 		case playlistId
 	}
@@ -32,7 +32,7 @@ struct Snippet : Codable {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		title = try values.decode(String.self, forKey: .title)
 		description = try values.decode(String.self, forKey: .description)
-		thumbnails = try values.decode(Thumbnails.self, forKey: .thumbnails)
+//        thumbnails = try values.decode(Thumbnails.self, forKey: .thumbnails)
 		channelTitle = try values.decode(String.self, forKey: .channelTitle)
 		playlistId = try values.decode(String.self, forKey: .playlistId)
 	}

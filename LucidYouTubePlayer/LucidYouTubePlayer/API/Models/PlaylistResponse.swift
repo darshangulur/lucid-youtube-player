@@ -15,16 +15,16 @@ import Foundation
 
 struct PlaylistResponse : Codable {
     let pageInfo : PageInfo
-    let items : [Item]
+    let items : [Items]
 
     enum CodingKeys: String, CodingKey {
         case pageInfo
-        case items
+        case items = "items"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         pageInfo = try values.decode(PageInfo.self, forKey: .pageInfo)
-        items = try values.decode([Item].self, forKey: .items)
+        items = try values.decode([Items].self, forKey: .items)
     }
 }

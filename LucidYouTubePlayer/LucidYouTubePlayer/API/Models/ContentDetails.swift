@@ -18,8 +18,8 @@ struct ContentDetails : Codable {
 	let videoPublishedAt : String
 
 	enum CodingKeys: String, CodingKey {
-		case videoId
-		case videoPublishedAt
+		case videoId = "videoId"
+		case videoPublishedAt = "videoPublishedAt"
 	}
 
 	init(from decoder: Decoder) throws {

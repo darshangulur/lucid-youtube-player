@@ -13,13 +13,13 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 
-struct Item : Codable {
+struct Items : Codable {
     let snippet : Snippet
 //    let contentDetails : ContentDetails
 
 	enum CodingKeys: String, CodingKey {
-		case snippet
-//        case contentDetails
+		case snippet = "snippet"
+//        case contentDetails = "contentDetails"
 	}
 
 	init(from decoder: Decoder) throws {
