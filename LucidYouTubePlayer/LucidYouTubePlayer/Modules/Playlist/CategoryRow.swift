@@ -20,8 +20,13 @@ final class CategoryRow : UITableViewCell {
         $0.register(VideoCell.self, forCellWithReuseIdentifier: "VideoCell")
         $0.dataSource = self
         $0.delegate = self
+        $0.backgroundColor = .clear
+        $0.showsHorizontalScrollIndicator = false
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
+
+    private var items = [Items]()
+    private var didTapHandler: ((Items) -> Void) = {_ in }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,16 +37,22 @@ final class CategoryRow : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private functions
     private func addSubViews() {
         self.contentView.addSubview(collectionView)
         collectionView.edgesToSuperview()
     }
+
+    // MARK: - Public functions
+    func configure(items: [Items], didTapHandler: @escaping ((Items) -> Void)) {
+        self.items = items
+        self.didTapHandler = didTapHandler
+    }
 }
 
 extension CategoryRow : UICollectionViewDataSource {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,6 +76,6 @@ extension CategoryRow : UICollectionViewDelegateFlowLayout {
 
 extension CategoryRow: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        didTapHandler(items[indexPath.item])
     }
 }

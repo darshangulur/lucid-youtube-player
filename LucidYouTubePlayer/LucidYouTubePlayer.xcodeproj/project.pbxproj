@@ -124,6 +124,7 @@
 		E0128C3520A75E85004E3871 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				E06660C720ABA8C000166E0B /* Repositories */,
 				E08FA57520A8C95600F3787D /* Models */,
 			);
 			path = API;
@@ -161,7 +162,6 @@
 				E0243B652085810E0020AC6F /* LaunchScreen.storyboard */,
 				E0243B682085810E0020AC6F /* Info.plist */,
 				E04F796F208584F100E31C0C /* GoogleService-Info.plist */,
-				E0128C3320A75BB9004E3871 /* PlaylistRepository.swift */,
 			);
 			path = LucidYouTubePlayer;
 			sourceTree = "<group>";
@@ -173,6 +173,14 @@
 				E0243B732085810E0020AC6F /* Info.plist */,
 			);
 			path = LucidYouTubePlayerTests;
+			sourceTree = "<group>";
+		};
+		E06660C720ABA8C000166E0B /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				E0128C3320A75BB9004E3871 /* PlaylistRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		E08FA57520A8C95600F3787D /* Models */ = {
@@ -206,6 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				E0243B5E2085810C0020AC6F /* PlaylistViewController.swift */,
+				E08FA5A020A8DC7C00F3787D /* VideoCell.swift */,
+				E08FA59E20A8D97000F3787D /* CategoryRow.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -221,8 +231,6 @@
 		E08FA59920A8D36A00F3787D /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
-				E08FA59E20A8D97000F3787D /* CategoryRow.swift */,
-				E08FA5A020A8DC7C00F3787D /* VideoCell.swift */,
 				E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */,
 			);
 			path = Reusable;

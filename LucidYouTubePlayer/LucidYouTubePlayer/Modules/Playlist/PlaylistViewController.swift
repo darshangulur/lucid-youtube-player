@@ -12,11 +12,13 @@ import TinyConstraints
 class PlaylistViewController: UIViewController {
 
     // MARK: - Private properties
-    private var categories = ["Action", "Drama", "Science Fiction", "Kids", "Horror"]
+    private var categories = [String]()
+    private var videos: [String: [Items]] = [:]
     private lazy var tableView: UITableView = {
         $0.register(CategoryRow.self, forCellReuseIdentifier: "CategoryRow")
         $0.dataSource = self
         $0.delegate = self
+        $0.showsVerticalScrollIndicator = false
         return $0
     }(UITableView(frame: .zero))
 
@@ -53,12 +55,20 @@ extension PlaylistViewController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryRow", for: indexPath) as! CategoryRow
+        cell.configure(items: self.videos[self.categories[indexPath.row]] ?? []) { item in
+            let player = YTPlayerViewController(videoId: item.snippet.playlistId)
+            self.navigationController?.present(player, animated: true)
+        }
         return cell
     }
 
 }
 
-extension PlaylistViewController : UITableViewDelegate { }
+extension PlaylistViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+}
 
 fileprivate extension PlaylistViewController {
     private func fetchPlaylist() {
@@ -68,6 +78,15 @@ fileprivate extension PlaylistViewController {
         pathString.append("&playlistId=PLBCF2DAC6FFB574DE")
         pathString.append("&maxResults=50")
         pathString.append("&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw")
-        playlistRepository.fetchPlaylist(forURL: pathString) { responseModel in }
+        playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
+            guard let response = playlistResponse, let firstItem = response.items.first else { return }
+
+            self?.categories.removeAll()
+            self?.videos.removeAll()
+
+            self?.categories.append(firstItem.snippet.title)
+            self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
+            self?.tableView.reloadData()
+        }
     }
 }
