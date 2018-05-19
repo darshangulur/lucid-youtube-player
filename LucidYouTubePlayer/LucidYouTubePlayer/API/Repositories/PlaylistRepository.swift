@@ -10,14 +10,14 @@ import UIKit
 import Alamofire
 
 protocol PlaylistSourcing {
-    func fetchPlaylist(forURL urlString: String, completion: @escaping (PlaylistResponse?) -> Void)
+    func fetchPlaylist(forURL urlString: String, completion: @escaping (Json4Swift_Base?) -> Void)
 }
 
 final class PlaylistRepository: PlaylistSourcing {
 
     init() {}
 
-    func fetchPlaylist(forURL urlString: String, completion: @escaping (PlaylistResponse?) -> Void) {
+    func fetchPlaylist(forURL urlString: String, completion: @escaping (Json4Swift_Base?) -> Void) {
         Alamofire.request(urlString).responseJSON { response in
 
 //            if let json = response.result.value {
@@ -28,7 +28,7 @@ final class PlaylistRepository: PlaylistSourcing {
 //                print("Data: \(utf8Text)") // original server data as UTF8 string
                 do {
                     let jsonDecoder = JSONDecoder()
-                    let responseModel = try jsonDecoder.decode(PlaylistResponse.self, from: data)
+                    let responseModel = try jsonDecoder.decode(Json4Swift_Base.self, from: data)
                     completion(responseModel)
                 } catch let error as NSError {
                     print(error.localizedDescription)

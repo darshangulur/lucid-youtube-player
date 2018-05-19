@@ -56,7 +56,7 @@ extension PlaylistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryRow", for: indexPath) as! CategoryRow
         cell.configure(items: self.videos[self.categories[indexPath.row]] ?? []) { item in
-            let player = YTPlayerViewController(videoId: item.snippet.playlistId)
+            let player = YTPlayerViewController(videoId: item.snippet?.playlistId ?? "<No playlistId>")
             self.navigationController?.present(player, animated: true)
         }
         return cell
@@ -79,13 +79,13 @@ fileprivate extension PlaylistViewController {
         pathString.append("&maxResults=50")
         pathString.append("&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw")
         playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
-            guard let response = playlistResponse, let firstItem = response.items.first else { return }
+            guard let response = playlistResponse, let firstItem = response.items?.first else { return }
 
             self?.categories.removeAll()
             self?.videos.removeAll()
 
-            self?.categories.append(firstItem.snippet.title)
-            self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
+            self?.categories.append(firstItem.snippet?.title ?? "<No title>")
+            self?.videos.updateValue(response.items ?? [], forKey: firstItem.snippet?.title ?? "<No title>")
             self?.tableView.reloadData()
         }
     }
