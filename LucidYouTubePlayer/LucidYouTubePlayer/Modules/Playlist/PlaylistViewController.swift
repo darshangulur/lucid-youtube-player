@@ -13,7 +13,7 @@ class PlaylistViewController: UIViewController {
 
     // MARK: - Private properties
     private var categories = [String]()
-    private var videos: [String: [Items]] = [:]
+    private var videos: [String: [PlaylistResponse.Items]] = [:]
     private lazy var tableView: UITableView = {
         $0.register(CategoryRow.self, forCellReuseIdentifier: "CategoryRow")
         $0.dataSource = self
@@ -56,7 +56,7 @@ extension PlaylistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryRow", for: indexPath) as! CategoryRow
         cell.configure(items: self.videos[self.categories[indexPath.row]] ?? []) { item in
-            let player = YTPlayerViewController(videoId: item.snippet?.playlistId ?? "<No playlistId>")
+            let player = YTPlayerViewController(videoId: item.snippet?.resourceId?.videoId ?? "<No playlistId>")
             self.navigationController?.present(player, animated: true)
         }
         return cell

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TinyConstraints
 import youtube_ios_player_helper
 
 class YTPlayerViewController: UIViewController {
@@ -30,6 +31,12 @@ class YTPlayerViewController: UIViewController {
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    // MARK: - Private functions
+    private func addSubviews() {
+        view.addSubview(playerView)
+        playerView.edgesToSuperview()
     }
 }
 

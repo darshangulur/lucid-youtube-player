@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         let playlistViewController = PlaylistViewController()
-        window?.rootViewController = playlistViewController
+        let navigationController = UINavigationController(rootViewController: playlistViewController)
+        window?.rootViewController = navigationController
         return true
     }
 

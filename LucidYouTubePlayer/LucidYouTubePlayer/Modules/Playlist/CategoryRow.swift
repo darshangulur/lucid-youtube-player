@@ -25,8 +25,8 @@ final class CategoryRow : UITableViewCell {
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
 
-    private var items = [Items]()
-    private var didTapHandler: ((Items) -> Void) = {_ in }
+    private var items = [PlaylistResponse.Items]()
+    private var didTapHandler: ((PlaylistResponse.Items) -> Void) = {_ in }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,7 +44,7 @@ final class CategoryRow : UITableViewCell {
     }
 
     // MARK: - Public functions
-    func configure(items: [Items], didTapHandler: @escaping ((Items) -> Void)) {
+    func configure(items: [PlaylistResponse.Items], didTapHandler: @escaping ((PlaylistResponse.Items) -> Void)) {
         self.items = items
         self.didTapHandler = didTapHandler
     }
