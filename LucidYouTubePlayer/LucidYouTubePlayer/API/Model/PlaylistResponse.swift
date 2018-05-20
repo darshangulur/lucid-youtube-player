@@ -81,3 +81,16 @@ struct PlaylistResponse: Codable {
     let pageInfo: PageInfo
     let items: [Item]
 }
+
+extension PlaylistResponse.Item.Snippet.Thumbnails {
+    var displayImageURL: URL? {
+        var urlString: String? = ""
+        if !(self.standard?.url.isEmpty ?? false) { urlString = self.standard?.url }
+        else if !(self.high?.url.isEmpty ?? false) { urlString = self.high?.url }
+        else if !(self.medium?.url.isEmpty ?? false) { urlString = self.medium?.url }
+        else if !(self.defaultValue?.url.isEmpty ?? false) { urlString = self.defaultValue?.url }
+
+        guard let string = urlString, let url = URL(string: string) else { return nil }
+        return url
+    }
+}

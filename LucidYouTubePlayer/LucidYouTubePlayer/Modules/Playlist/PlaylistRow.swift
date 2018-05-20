@@ -13,6 +13,7 @@ final class PlaylistRow : UITableViewCell {
     // MARK: - Private properties
     private let flowLayout: UICollectionViewFlowLayout = {
         $0.scrollDirection = .horizontal
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         return $0
     }(UICollectionViewFlowLayout())
 
@@ -58,6 +59,7 @@ extension PlaylistRow : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell",
                                                       for: indexPath) as! VideoCell
+        cell.configure(item: items[indexPath.item])
         return cell
     }
 

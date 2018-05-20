@@ -10,6 +10,7 @@ target 'LucidYouTubePlayer' do
   pod 'Alamofire', '~> 4.7'
   pod 'youtube-ios-player-helper'
   pod 'TinyConstraints'
+  pod 'SDWebImage', '~> 4.0'
 
   target 'LucidYouTubePlayerTests' do
     inherit! :search_paths

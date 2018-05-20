@@ -13,4 +13,9 @@ enum Stylesheet {
         static let primaryGray = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.0)
         static let primaryWhite = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.0)
     }
+
+    enum Font {
+        static let title = UIFont(name: "Helvetica-bold", size: 16.0)
+        static let description = UIFont(name: "Helvetica", size: 14.0)
+    }
 }
