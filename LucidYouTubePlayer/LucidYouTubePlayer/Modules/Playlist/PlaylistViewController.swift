@@ -14,11 +14,13 @@ final class PlaylistViewController: UIViewController {
     // MARK: - Private properties
     private var categories = [String]()
     private var videos: [String: [PlaylistResponse.Item]] = [:]
+    
     private lazy var tableView: UITableView = {
         $0.register(PlaylistRow.self, forCellReuseIdentifier: "CategoryRow")
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
+        $0.separatorStyle = .none
         return $0
     }(UITableView(frame: .zero))
 

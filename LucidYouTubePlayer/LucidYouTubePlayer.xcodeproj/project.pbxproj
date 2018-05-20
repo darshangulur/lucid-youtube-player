@@ -23,6 +23,7 @@
 		E08FA59F20A8D97100F3787D /* PlaylistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA59E20A8D97000F3787D /* PlaylistRow.swift */; };
 		E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA5A020A8DC7C00F3787D /* VideoCell.swift */; };
 		E0FD781820B05632007C4FA8 /* PlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */; };
+		E0FD782220B1CA1C007C4FA8 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD782120B1CA1C007C4FA8 /* Views.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		E08FA59E20A8D97000F3787D /* PlaylistRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRow.swift; sourceTree = "<group>"; };
 		E08FA5A020A8DC7C00F3787D /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistResponse.swift; sourceTree = "<group>"; };
+		E0FD782120B1CA1C007C4FA8 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		ECEBD8C98D6F464AED061168 /* Pods-LucidYouTubePlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayer/Pods-LucidYouTubePlayer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,7 +168,6 @@
 		E08FA58E20A8CCC000F3787D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E08FA59920A8D36A00F3787D /* Reusable */,
 				E08FA58F20A8CCC700F3787D /* Playlist */,
 			);
 			path = Modules;
@@ -186,16 +187,10 @@
 			isa = PBXGroup;
 			children = (
 				E08FA59120A8CF0300F3787D /* Stylesheet.swift */,
+				E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */,
+				E0FD782120B1CA1C007C4FA8 /* Views.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		E08FA59920A8D36A00F3787D /* Reusable */ = {
-			isa = PBXGroup;
-			children = (
-				E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */,
-			);
-			path = Reusable;
 			sourceTree = "<group>";
 		};
 		E0FD780620B05631007C4FA8 /* Model */ = {
@@ -336,6 +331,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
@@ -345,6 +341,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
@@ -387,6 +384,7 @@
 				E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */,
 				E0243B5D2085810C0020AC6F /* AppDelegate.swift in Sources */,
 				E08FA59B20A8D63D00F3787D /* YTPlayerViewController.swift in Sources */,
+				E0FD782220B1CA1C007C4FA8 /* Views.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,9 +53,7 @@ final class VideoCell : UICollectionViewCell {
 
     // MARK: - Private functions
     private func addSubviews() {
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubviews([imageView, titleLabel, descriptionLabel])
 
         imageView.edgesToSuperview(excluding: .bottom)
         imageView.height(150)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TinyConstraints
 
 final class PlaylistRow : UITableViewCell {
 
@@ -42,7 +43,11 @@ final class PlaylistRow : UITableViewCell {
     // MARK: - Private functions
     private func addSubViews() {
         self.contentView.addSubview(collectionView)
-        collectionView.edgesToSuperview()
+        collectionView.edgesToSuperview(insets: TinyEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+
+        let dashedLineView = DashedLineView()
+        self.addSubview(dashedLineView)
+        dashedLineView.edgesToSuperview(excluding: .top)
     }
 
     // MARK: - Public functions

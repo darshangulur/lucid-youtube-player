@@ -25,6 +25,21 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
+  - SwifterSwift (4.3.0):
+    - SwifterSwift/AppKit (= 4.3.0)
+    - SwifterSwift/CoreGraphics (= 4.3.0)
+    - SwifterSwift/CoreLocation (= 4.3.0)
+    - SwifterSwift/Foundation (= 4.3.0)
+    - SwifterSwift/MapKit (= 4.3.0)
+    - SwifterSwift/SwiftStdlib (= 4.3.0)
+    - SwifterSwift/UIKit (= 4.3.0)
+  - SwifterSwift/AppKit (4.3.0)
+  - SwifterSwift/CoreGraphics (4.3.0)
+  - SwifterSwift/CoreLocation (4.3.0)
+  - SwifterSwift/Foundation (4.3.0)
+  - SwifterSwift/MapKit (4.3.0)
+  - SwifterSwift/SwiftStdlib (4.3.0)
+  - SwifterSwift/UIKit (4.3.0)
   - TinyConstraints (3.1.0)
   - youtube-ios-player-helper (0.1.6)
 
@@ -32,6 +47,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Firebase/Core
   - SDWebImage (~> 4.0)
+  - SwifterSwift
   - TinyConstraints
   - youtube-ios-player-helper
 
@@ -45,6 +61,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - nanopb
     - SDWebImage
+    - SwifterSwift
     - TinyConstraints
     - youtube-ios-player-helper
 
@@ -57,9 +74,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
   TinyConstraints: 4721a4b303c799328867078ade6560e152df54d1
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: 5021c793e0a6f150103ae0c4e03dbd9686796a2e
+PODFILE CHECKSUM: 61b32f38b87d26e1a456e68117cb75d979c947aa
 
 COCOAPODS: 1.5.0
