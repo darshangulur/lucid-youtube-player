@@ -62,27 +62,27 @@ extension PlaylistViewController : UITableViewDataSource {
 
 extension PlaylistViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return 300
     }
 }
 
 fileprivate extension PlaylistViewController {
     private func fetchPlaylist() {
+        guard let playlistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") else { return }
+
+        self.categories.removeAll()
+        self.videos.removeAll()
+
         let playlistRepository: PlaylistSourcing = PlaylistRepository()
-        var pathString = "https://www.googleapis.com/youtube/v3/playlistItems"
-        pathString.append("?part=snippet")
-        pathString.append("&playlistId=PLBCF2DAC6FFB574DE")
-        pathString.append("&maxResults=50")
-        pathString.append("&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw")
-        playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
-            guard let response = playlistResponse, let firstItem = response.items.first else { return }
+        playlistIds.forEach {
+            let pathString = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\($0)&maxResults=50&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw"
+            playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
+                guard let response = playlistResponse, let firstItem = response.items.first else { return }
 
-            self?.categories.removeAll()
-            self?.videos.removeAll()
-
-            self?.categories.append(firstItem.snippet.title)
-            self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
-            self?.tableView.reloadData()
+                self?.categories.append(firstItem.snippet.title)
+                self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
+                self?.tableView.reloadData()
+            }
         }
     }
 }

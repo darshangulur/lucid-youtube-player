@@ -62,7 +62,7 @@ final class VideoCell : UICollectionViewCell {
         titleLabel.topToBottom(of: imageView, offset: 10)
 
         descriptionLabel.edgesToSuperview(excluding: .top)
-        descriptionLabel.topToBottom(of: titleLabel, offset: 10)
+        descriptionLabel.topToBottom(of: titleLabel)
     }
 
     func configure(item: PlaylistResponse.Item) {
@@ -77,7 +77,7 @@ final class SectionHeaderView: UIView {
     // MARK: - Private properties
     private var titleLabel: UILabel = {
         $0.textAlignment = .left
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.font = Stylesheet.Font.sectionHeader
         return $0
     }(UILabel(frame: .zero))
@@ -93,17 +93,13 @@ final class SectionHeaderView: UIView {
         configure()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     // MARK: - Private functions
     private func addSubviews() {
         self.addSubview(titleLabel)
-        titleLabel.edgesToSuperview(insets: TinyEdgeInsets(top: 20, left: 40, bottom: 20, right: 40))
+        titleLabel.edgesToSuperview(insets: TinyEdgeInsets(top: 20, left: 40, bottom: 0, right: 40))
     }
 
-    private func configure() {
-        titleLabel.text = title
-    }
+    private func configure() { titleLabel.text = title }
 }

@@ -43,7 +43,7 @@ final class PlaylistRow : UITableViewCell {
     // MARK: - Private functions
     private func addSubViews() {
         self.contentView.addSubview(collectionView)
-        collectionView.edgesToSuperview(insets: TinyEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+        collectionView.edgesToSuperview()
 
         let dashedLineView = DashedLineView()
         self.addSubview(dashedLineView)
@@ -72,10 +72,10 @@ extension PlaylistRow : UICollectionViewDataSource {
 
 extension PlaylistRow : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow:CGFloat = 4
-        let hardCodedPadding:CGFloat = 5
+        let itemsPerRow = 4.cgFloat
+        let hardCodedPadding = 25.cgFloat
         let itemWidth = (collectionView.bounds.width / itemsPerRow) - hardCodedPadding
-        let itemHeight = collectionView.bounds.height - (2 * hardCodedPadding)
+        let itemHeight = collectionView.bounds.height - hardCodedPadding
         return CGSize(width: itemWidth, height: itemHeight)
     }
 }
