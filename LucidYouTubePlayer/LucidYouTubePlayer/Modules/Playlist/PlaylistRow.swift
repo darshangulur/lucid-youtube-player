@@ -12,7 +12,7 @@ import TinyConstraints
 final class PlaylistRow : UITableViewCell {
 
     // MARK: - Private properties
-    private let flowLayout: UICollectionViewFlowLayout = {
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 20
         $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)

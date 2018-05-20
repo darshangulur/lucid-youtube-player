@@ -13,6 +13,8 @@ enum Stylesheet {
         static let primaryGray = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.0)
         static let primaryWhite = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.0)
         static let secondaryGray = UIColor(red:0.43, green:0.48, blue:0.51, alpha:1)
+        static let secondaryRed = UIColor(red:1.0, green:0.0, blue:0.0, alpha:1)
+        static let secondaryOrange = UIColor(red:1.00, green:0.48, blue:0.00, alpha:1.0)
     }
 
     enum Font {

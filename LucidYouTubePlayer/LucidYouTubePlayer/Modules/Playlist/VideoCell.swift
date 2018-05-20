@@ -19,15 +19,13 @@ final class VideoCell : UICollectionViewCell {
         return $0
     }(UIImageView())
 
-    private var titleLabel: UILabel = {
-        $0.textAlignment = .left
+    private lazy var titleLabel: UILabel = {
         $0.numberOfLines = 2
         $0.font = Stylesheet.Font.title
         return $0
     }(UILabel(frame: .zero))
 
-    private var descriptionLabel: UILabel = {
-        $0.textAlignment = .left
+    private lazy var descriptionLabel: UILabel = {
         $0.numberOfLines = 3
         $0.font = Stylesheet.Font.description
         $0.textColor = Stylesheet.Color.secondaryGray
@@ -75,14 +73,12 @@ final class VideoCell : UICollectionViewCell {
 final class SectionHeaderView: UIView {
 
     // MARK: - Private properties
-    private var titleLabel: UILabel = {
-        $0.textAlignment = .left
-        $0.numberOfLines = 1
+    private lazy var titleLabel: UILabel = {
         $0.font = Stylesheet.Font.sectionHeader
         return $0
     }(UILabel(frame: .zero))
 
-    private var title: String
+    private let title: String
 
     // MARK: - Initializers
     init(title: String) {
@@ -101,5 +97,6 @@ final class SectionHeaderView: UIView {
         titleLabel.edgesToSuperview(insets: TinyEdgeInsets(top: 20, left: 40, bottom: 0, right: 40))
     }
 
+    // MARK: - Public functions
     private func configure() { titleLabel.text = title }
 }

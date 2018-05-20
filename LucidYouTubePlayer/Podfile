@@ -12,6 +12,7 @@ target 'LucidYouTubePlayer' do
   pod 'TinyConstraints'
   pod 'SDWebImage', '~> 4.0'
   pod 'SwifterSwift'
+  pod 'Closures'
 
   target 'LucidYouTubePlayerTests' do
     inherit! :search_paths

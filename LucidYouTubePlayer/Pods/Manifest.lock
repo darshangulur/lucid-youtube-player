@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.2)
+  - Closures (0.4)
   - Firebase/Core (5.0.1):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.0)
@@ -45,6 +46,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - Closures
   - Firebase/Core
   - SDWebImage (~> 4.0)
   - SwifterSwift
@@ -54,6 +56,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - Closures
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -67,6 +70,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Closures: fe9ecbda045d8d42cc13520209b4ea5208e38248
   Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
@@ -78,6 +82,6 @@ SPEC CHECKSUMS:
   TinyConstraints: 4721a4b303c799328867078ade6560e152df54d1
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: 61b32f38b87d26e1a456e68117cb75d979c947aa
+PODFILE CHECKSUM: 66e2d476e94afcfa0498a3b625a5e98fe4c5b196
 
 COCOAPODS: 1.5.0

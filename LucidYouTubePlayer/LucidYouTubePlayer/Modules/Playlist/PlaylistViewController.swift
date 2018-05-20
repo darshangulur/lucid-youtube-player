@@ -31,6 +31,10 @@ final class PlaylistViewController: UIViewController {
         self.view.backgroundColor = Stylesheet.Color.primaryWhite
 
         addSubViews()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+",
+                                                                 style: .done,
+                                                                 target: self,
+                                                                 action: #selector(configureNewTapped))
         fetchPlaylist()
     }
 
@@ -38,6 +42,30 @@ final class PlaylistViewController: UIViewController {
     private func addSubViews() {
         self.view.addSubview(tableView)
         tableView.edgesToSuperview()
+    }
+
+    @objc private func configureNewTapped(sender: UIBarButtonItem) {
+        let configureNewViewController =  ConfigureNewPlaylistViewController { [weak self] playlistId in
+            guard !playlistId.isEmpty else { return }
+
+            var playlistIds = [String]()
+            if let storedPlaylistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") {
+                playlistIds.append(contentsOf: storedPlaylistIds)
+            }
+
+            playlistIds.append(playlistId)
+            UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
+            self?.fetchPlaylist()
+        }
+
+        configureNewViewController.modalPresentationStyle = .popover
+        configureNewViewController.preferredContentSize = CGSize(width: 300, height: 300)
+        self.present(configureNewViewController, animated: true, completion: nil)
+
+        let popoverPresentationViewController = configureNewViewController.popoverPresentationController
+        popoverPresentationViewController?.delegate = self
+        popoverPresentationViewController?.permittedArrowDirections = .up
+        popoverPresentationViewController?.barButtonItem = sender
     }
 }
 
@@ -57,7 +85,6 @@ extension PlaylistViewController : UITableViewDataSource {
         }
         return cell
     }
-
 }
 
 extension PlaylistViewController : UITableViewDelegate {
@@ -74,15 +101,29 @@ fileprivate extension PlaylistViewController {
         self.videos.removeAll()
 
         let playlistRepository: PlaylistSourcing = PlaylistRepository()
-        playlistIds.forEach {
-            let pathString = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\($0)&maxResults=50&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw"
+        let dispatchGroup = DispatchGroup()
+
+        playlistIds.enumerated().forEach {
+            dispatchGroup.enter();
+            let playlistItem = $0
+            let pathString = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\(playlistItem.element)&maxResults=50&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw"
+
+            print(pathString)
             playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
-                guard let response = playlistResponse, let firstItem = response.items.first else { return }
+                guard let response = playlistResponse, let firstItem = response.items.first else { dispatchGroup.leave(); return }
 
                 self?.categories.append(firstItem.snippet.title)
                 self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
-                self?.tableView.reloadData()
+                dispatchGroup.leave()
             }
         }
+
+        dispatchGroup.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
     }
+}
+
+extension PlaylistViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle { return .none }
 }
