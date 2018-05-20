@@ -16,7 +16,7 @@ final class PlaylistViewController: UIViewController {
     private var videos: [String: [PlaylistResponse.Item]] = [:]
     
     private lazy var tableView: UITableView = {
-        $0.register(PlaylistRow.self, forCellReuseIdentifier: "CategoryRow")
+        $0.register(PlaylistRow.self, forCellReuseIdentifier: PlaylistRow.className)
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
@@ -50,7 +50,7 @@ extension PlaylistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 1 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryRow", for: indexPath) as! PlaylistRow
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlaylistRow.className, for: indexPath) as! PlaylistRow
         cell.configure(items: self.videos[self.categories[indexPath.row]] ?? []) { item in
             let player = YTPlayerViewController(videoId: item.snippet.resourceId.videoId)
             self.navigationController?.present(player, animated: true)

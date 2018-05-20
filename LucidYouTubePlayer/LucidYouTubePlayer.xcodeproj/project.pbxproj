@@ -24,6 +24,7 @@
 		E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA5A020A8DC7C00F3787D /* VideoCell.swift */; };
 		E0FD781820B05632007C4FA8 /* PlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */; };
 		E0FD782220B1CA1C007C4FA8 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD782120B1CA1C007C4FA8 /* Views.swift */; };
+		E0FD782420B1D089007C4FA8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD782320B1D089007C4FA8 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		E08FA5A020A8DC7C00F3787D /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistResponse.swift; sourceTree = "<group>"; };
 		E0FD782120B1CA1C007C4FA8 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		E0FD782320B1D089007C4FA8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ECEBD8C98D6F464AED061168 /* Pods-LucidYouTubePlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayer/Pods-LucidYouTubePlayer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 				E08FA59120A8CF0300F3787D /* Stylesheet.swift */,
 				E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */,
 				E0FD782120B1CA1C007C4FA8 /* Views.swift */,
+				E0FD782320B1D089007C4FA8 /* Extensions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				E0128C3420A75BB9004E3871 /* PlaylistRepository.swift in Sources */,
 				E0FD781820B05632007C4FA8 /* PlaylistResponse.swift in Sources */,
 				E08FA59F20A8D97100F3787D /* PlaylistRow.swift in Sources */,
+				E0FD782420B1D089007C4FA8 /* Extensions.swift in Sources */,
 				E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */,
 				E0243B5D2085810C0020AC6F /* AppDelegate.swift in Sources */,
 				E08FA59B20A8D63D00F3787D /* YTPlayerViewController.swift in Sources */,
@@ -550,7 +554,10 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = LucidYouTubePlayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.lucid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -568,7 +575,10 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = LucidYouTubePlayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.lucid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -585,7 +595,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6FYUH29G;
 				INFOPLIST_FILE = LucidYouTubePlayerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucid.LucidYouTubePlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -603,7 +617,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T6FYUH29G;
 				INFOPLIST_FILE = LucidYouTubePlayerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucid.LucidYouTubePlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

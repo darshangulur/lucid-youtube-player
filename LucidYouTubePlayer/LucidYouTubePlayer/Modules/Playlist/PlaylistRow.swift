@@ -20,7 +20,7 @@ final class PlaylistRow : UITableViewCell {
     }(UICollectionViewFlowLayout())
 
     private lazy var collectionView: UICollectionView = {
-        $0.register(VideoCell.self, forCellWithReuseIdentifier: "VideoCell")
+        $0.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.className)
         $0.dataSource = self
         $0.delegate = self
         $0.backgroundColor = .clear
@@ -63,12 +63,11 @@ extension PlaylistRow : UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell",
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCell.className,
                                                       for: indexPath) as! VideoCell
         cell.configure(item: items[indexPath.item])
         return cell
     }
-
 }
 
 extension PlaylistRow : UICollectionViewDelegateFlowLayout {
@@ -79,7 +78,6 @@ extension PlaylistRow : UICollectionViewDelegateFlowLayout {
         let itemHeight = collectionView.bounds.height - (2 * hardCodedPadding)
         return CGSize(width: itemWidth, height: itemHeight)
     }
-
 }
 
 extension PlaylistRow: UICollectionViewDelegate {
