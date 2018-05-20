@@ -1,90 +1,83 @@
-/* 
-Copyright (c) 2018 Swift Models Generated from JSON powered by http://www.json4swift.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar
-
-*/
+//
+//  PlaylistResponse.swift
+//  LucidYouTubePlayer
+//
+//  Created by Darshan Gulur Srinivasa on 5/13/18.
+//  Copyright © 2018 Lucid Infosystems. All rights reserved.
+//
 
 import Foundation
 
-struct PlaylistResponse : Codable {
-
-    struct PageInfo : Codable {
-        let totalResults : Int?
-        let resultsPerPage : Int?
+struct PlaylistResponse: Codable {
+    
+    struct PageInfo: Codable {
+        let totalResults: Int
+        let resultsPerPage: Int
     }
-
-    struct Items : Codable {
-        
-        struct Snippet : Codable {
-
-            struct Thumbnails : Codable {
-                struct Default : Codable {
-                    let url : String?
-                    let width : Int?
-                    let height : Int?
-                }
-
-                struct Medium : Codable {
-                    let url : String?
-                    let width : Int?
-                    let height : Int?
-                }
-
-                struct High : Codable {
-                    let url : String?
-                    let width : Int?
-                    let height : Int?
-                }
-
-                struct Standard : Codable {
-                    let url : String?
-                    let width : Int?
-                    let height : Int?
+    
+    struct Item: Codable {
+        struct Snippet: Codable {
+            struct Thumbnails: Codable {
+                struct Default: Codable {
+                    let url: String
+                    let width: Int
+                    let height: Int
                 }
                 
-                let defaultValue : Default?
-                let medium : Medium?
-                let high : High?
-                let standard : Standard?
-            }
-
-            struct ResourceId : Codable {
-                let kind : String?
-                let videoId : String?
+                struct Medium: Codable {
+                    let url: String
+                    let width: Int
+                    let height: Int
+                }
+                
+                struct High: Codable {
+                    let url: String
+                    let width: Int
+                    let height: Int
+                }
+                
+                struct Standard: Codable {
+                    let url: String
+                    let width: Int
+                    let height: Int
+                }
+                
+                let defaultValue: Default?
+                let medium: Medium?
+                let high: High?
+                let standard: Standard?
             }
             
-            let publishedAt : String?
-            let channelId : String?
-            let title : String?
-            let description : String?
-            let thumbnails : Thumbnails?
-            let channelTitle : String?
-            let playlistId : String?
-            let position : Int?
-            let resourceId : ResourceId?
+            struct ResourceId: Codable {
+                let kind: String
+                let videoId: String
+            }
+            
+            let publishedAt: String
+            let channelId: String
+            let title: String
+            let description: String
+            let thumbnails: Thumbnails?
+            let channelTitle: String
+            let playlistId: String
+            let position: Int
+            let resourceId: ResourceId
         }
-
-        struct ContentDetails : Codable {
-            let videoId : String?
-            let videoPublishedAt : String?
+        
+        struct ContentDetails: Codable {
+            let videoId: String
+            let videoPublishedAt: String
         }
-
-        let kind : String?
-        let etag : String?
-        let id : String?
-        let snippet : Snippet?
-        let contentDetails : ContentDetails?
+        
+        let kind: String
+        let etag: String
+        let id: String
+        let snippet: Snippet
+        let contentDetails: ContentDetails?
     }
-
-	let kind : String?
-	let etag : String?
-	let pageInfo : PageInfo?
-	let items : [Items]?
+    
+    let kind: String
+    let etag: String
+    let pageInfo: PageInfo
+    let items: [Item]
 }

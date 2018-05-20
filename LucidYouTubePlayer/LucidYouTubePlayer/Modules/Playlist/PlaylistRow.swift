@@ -1,14 +1,14 @@
 //
 //  CategoryRow.swift
-//  TwoDirectionalScroller
+//  LucidYouTubePlayer
 //
-//  Created by Robert Chen on 7/11/15.
-//  Copyright (c) 2015 Thorn Technologies. All rights reserved.
+//  Created by Darshan Gulur Srinivasa on 5/13/18.
+//  Copyright © 2018 Lucid Infosystems. All rights reserved.
 //
 
 import UIKit
 
-final class CategoryRow : UITableViewCell {
+final class PlaylistRow : UITableViewCell {
 
     // MARK: - Private properties
     private let flowLayout: UICollectionViewFlowLayout = {
@@ -25,8 +25,8 @@ final class CategoryRow : UITableViewCell {
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
 
-    private var items = [PlaylistResponse.Items]()
-    private var didTapHandler: ((PlaylistResponse.Items) -> Void) = {_ in }
+    private var items = [PlaylistResponse.Item]()
+    private var didTapHandler: ((PlaylistResponse.Item) -> Void) = {_ in }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,13 +44,13 @@ final class CategoryRow : UITableViewCell {
     }
 
     // MARK: - Public functions
-    func configure(items: [PlaylistResponse.Items], didTapHandler: @escaping ((PlaylistResponse.Items) -> Void)) {
+    func configure(items: [PlaylistResponse.Item], didTapHandler: @escaping ((PlaylistResponse.Item) -> Void)) {
         self.items = items
         self.didTapHandler = didTapHandler
     }
 }
 
-extension CategoryRow : UICollectionViewDataSource {
+extension PlaylistRow : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
@@ -63,7 +63,7 @@ extension CategoryRow : UICollectionViewDataSource {
 
 }
 
-extension CategoryRow : UICollectionViewDelegateFlowLayout {
+extension PlaylistRow : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow:CGFloat = 4
         let hardCodedPadding:CGFloat = 5
@@ -74,7 +74,7 @@ extension CategoryRow : UICollectionViewDelegateFlowLayout {
 
 }
 
-extension CategoryRow: UICollectionViewDelegate {
+extension PlaylistRow: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didTapHandler(items[indexPath.item])
     }

@@ -1,9 +1,9 @@
 //
 //  VideoCell.swift
-//  TwoDirectionalScroller
+//  LucidYouTubePlayer
 //
-//  Created by Robert Chen on 7/11/15.
-//  Copyright (c) 2015 Thorn Technologies. All rights reserved.
+//  Created by Darshan Gulur Srinivasa on 5/13/18.
+//  Copyright © 2018 Lucid Infosystems. All rights reserved.
 //
 
 import UIKit
@@ -30,5 +30,9 @@ class VideoCell : UICollectionViewCell {
     private func addSubviews() {
         self.contentView.addSubview(imageView)
         imageView.edgesToSuperview()
+    }
+
+    func configure() {
+
     }
 }

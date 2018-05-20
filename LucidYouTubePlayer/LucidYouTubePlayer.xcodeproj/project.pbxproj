@@ -20,7 +20,7 @@
 		E04F7971208584F100E31C0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E04F796F208584F100E31C0C /* GoogleService-Info.plist */; };
 		E08FA59220A8CF0300F3787D /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA59120A8CF0300F3787D /* Stylesheet.swift */; };
 		E08FA59B20A8D63D00F3787D /* YTPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */; };
-		E08FA59F20A8D97100F3787D /* CategoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA59E20A8D97000F3787D /* CategoryRow.swift */; };
+		E08FA59F20A8D97100F3787D /* PlaylistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA59E20A8D97000F3787D /* PlaylistRow.swift */; };
 		E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08FA5A020A8DC7C00F3787D /* VideoCell.swift */; };
 		E0FD781820B05632007C4FA8 /* PlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */; };
 /* End PBXBuildFile section */
@@ -55,7 +55,7 @@
 		E04F796F208584F100E31C0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E08FA59120A8CF0300F3787D /* Stylesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
 		E08FA59A20A8D63D00F3787D /* YTPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YTPlayerViewController.swift; sourceTree = "<group>"; };
-		E08FA59E20A8D97000F3787D /* CategoryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryRow.swift; sourceTree = "<group>"; };
+		E08FA59E20A8D97000F3787D /* PlaylistRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRow.swift; sourceTree = "<group>"; };
 		E08FA5A020A8DC7C00F3787D /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		E0FD780D20B05631007C4FA8 /* PlaylistResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistResponse.swift; sourceTree = "<group>"; };
 		ECEBD8C98D6F464AED061168 /* Pods-LucidYouTubePlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LucidYouTubePlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LucidYouTubePlayer/Pods-LucidYouTubePlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				E0243B5E2085810C0020AC6F /* PlaylistViewController.swift */,
-				E08FA59E20A8D97000F3787D /* CategoryRow.swift */,
+				E08FA59E20A8D97000F3787D /* PlaylistRow.swift */,
 				E08FA5A020A8DC7C00F3787D /* VideoCell.swift */,
 			);
 			path = Playlist;
@@ -381,7 +381,7 @@
 				E0243B5F2085810C0020AC6F /* PlaylistViewController.swift in Sources */,
 				E0128C3420A75BB9004E3871 /* PlaylistRepository.swift in Sources */,
 				E0FD781820B05632007C4FA8 /* PlaylistResponse.swift in Sources */,
-				E08FA59F20A8D97100F3787D /* CategoryRow.swift in Sources */,
+				E08FA59F20A8D97100F3787D /* PlaylistRow.swift in Sources */,
 				E08FA5A120A8DC7C00F3787D /* VideoCell.swift in Sources */,
 				E0243B5D2085810C0020AC6F /* AppDelegate.swift in Sources */,
 				E08FA59B20A8D63D00F3787D /* YTPlayerViewController.swift in Sources */,
