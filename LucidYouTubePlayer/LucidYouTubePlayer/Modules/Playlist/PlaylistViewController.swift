@@ -9,7 +9,7 @@
 import UIKit
 import TinyConstraints
 
-class PlaylistViewController: UIViewController {
+final class PlaylistViewController: UIViewController {
 
     // MARK: - Private properties
     private var categories = [String]()
@@ -40,18 +40,12 @@ class PlaylistViewController: UIViewController {
 }
 
 extension PlaylistViewController : UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return categories[section]
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return SectionHeaderView(title: categories[section])
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
+    func numberOfSections(in tableView: UITableView) -> Int { return categories.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 1 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryRow", for: indexPath) as! PlaylistRow
