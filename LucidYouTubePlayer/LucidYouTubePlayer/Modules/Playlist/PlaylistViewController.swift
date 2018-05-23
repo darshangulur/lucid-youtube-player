@@ -53,13 +53,16 @@ final class PlaylistViewController: UIViewController {
                 playlistIds.append(contentsOf: storedPlaylistIds)
             }
 
-            playlistIds.append(playlistId)
-            UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
-            self?.fetchPlaylist()
+            if !playlistIds.contains(playlistId) {
+                playlistIds.append(playlistId)
+                UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
+                self?.fetchPlaylist()
+            }
+            self?.navigationController?.topViewController?.dismiss(animated: true)
         }
 
         configureNewViewController.modalPresentationStyle = .popover
-        configureNewViewController.preferredContentSize = CGSize(width: 300, height: 300)
+        configureNewViewController.preferredContentSize = CGSize(width: 600, height: 150)
         self.present(configureNewViewController, animated: true, completion: nil)
 
         let popoverPresentationViewController = configureNewViewController.popoverPresentationController
@@ -79,7 +82,7 @@ extension PlaylistViewController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlaylistRow.className, for: indexPath) as! PlaylistRow
-        cell.configure(items: self.videos[self.categories[indexPath.row]] ?? []) { item in
+        cell.configure(items: self.videos[self.categories[indexPath.section]] ?? []) { item in
             let player = YTPlayerViewController(videoId: item.snippet.resourceId.videoId)
             self.navigationController?.present(player, animated: true)
         }
@@ -110,10 +113,12 @@ fileprivate extension PlaylistViewController {
 
             print(pathString)
             playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
-                guard let response = playlistResponse, let firstItem = response.items.first else { dispatchGroup.leave(); return }
+                guard let response = playlistResponse, let firstItem = response.items.first else {
+                    dispatchGroup.leave(); return
+                }
 
-                self?.categories.append(firstItem.snippet.title)
-                self?.videos.updateValue(response.items, forKey: firstItem.snippet.title)
+                self?.categories.append(firstItem.snippet.channelTitle)
+                self?.videos.updateValue(response.items, forKey: firstItem.snippet.channelTitle)
                 dispatchGroup.leave()
             }
         }

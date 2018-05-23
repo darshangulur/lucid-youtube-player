@@ -84,6 +84,8 @@ final class SectionHeaderView: UIView {
     init(title: String) {
         self.title = title
         super.init(frame: .zero)
+        self.backgroundColor = Stylesheet.Color.primaryWhite
+
 
         addSubviews()
         configure()
@@ -94,7 +96,7 @@ final class SectionHeaderView: UIView {
     // MARK: - Private functions
     private func addSubviews() {
         self.addSubview(titleLabel)
-        titleLabel.edgesToSuperview(insets: TinyEdgeInsets(top: 20, left: 40, bottom: 0, right: 40))
+        titleLabel.edgesToSuperview(insets: TinyEdgeInsets(top: 20, left: 40, bottom: 20, right: 40))
     }
 
     // MARK: - Public functions
