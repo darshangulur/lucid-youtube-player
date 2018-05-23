@@ -17,10 +17,12 @@ class YTPlayerViewController: UIViewController {
     private let playerView = YTPlayerView()
 
     // MARK: - Initializers
-    init(videoId: String) {
+    init(videoTitle: String, videoId: String) {
         self.videoId = videoId
         super.init(nibName: nil, bundle: nil)
 
+        self.title = videoTitle
+        addSubviews()
         playVideo()
     }
 
