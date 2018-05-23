@@ -62,7 +62,7 @@ final class PlaylistViewController: UIViewController {
         }
         
         configureNewViewController.modalPresentationStyle = .popover
-        configureNewViewController.preferredContentSize = CGSize(width: 600, height: 150)
+        configureNewViewController.preferredContentSize = CGSize(width: 600, height: 200)
         self.present(configureNewViewController, animated: true, completion: nil)
         
         let popoverPresentationViewController = configureNewViewController.popoverPresentationController

@@ -76,7 +76,7 @@ class ConfigureNewPlaylistViewController: UIViewController {
 
     private func bindActions() {
         button.onTap {
-            guard let text = self.textField.text else {
+            guard let text = self.textField.text, !text.isEmpty else {
                 self.titleLabel.text = "Error in Playlist Id."
                 return
             }
