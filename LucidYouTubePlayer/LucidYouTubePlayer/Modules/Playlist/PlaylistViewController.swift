@@ -10,7 +10,7 @@ import UIKit
 import TinyConstraints
 
 final class PlaylistViewController: UIViewController {
-
+    
     // MARK: - Private properties
     private var categories = [String]()
     private var videos: [String: [PlaylistResponse.Item]] = [:]
@@ -23,13 +23,13 @@ final class PlaylistViewController: UIViewController {
         $0.separatorStyle = .none
         return $0
     }(UITableView(frame: .zero))
-
+    
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Playlist"
         self.view.backgroundColor = Stylesheet.Color.primaryWhite
-
+        
         addSubViews()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+",
                                                                  style: .done,
@@ -37,22 +37,22 @@ final class PlaylistViewController: UIViewController {
                                                                  action: #selector(configureNewTapped))
         fetchPlaylist()
     }
-
+    
     // MARK: - Private properties
     private func addSubViews() {
         self.view.addSubview(tableView)
         tableView.edgesToSuperview()
     }
-
+    
     @objc private func configureNewTapped(sender: UIBarButtonItem) {
         let configureNewViewController =  ConfigureNewPlaylistViewController { [weak self] playlistId in
             guard !playlistId.isEmpty else { return }
-
+            
             var playlistIds = [String]()
             if let storedPlaylistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") {
                 playlistIds.append(contentsOf: storedPlaylistIds)
             }
-
+            
             if !playlistIds.contains(playlistId) {
                 playlistIds.append(playlistId)
                 UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
@@ -60,11 +60,11 @@ final class PlaylistViewController: UIViewController {
             }
             self?.navigationController?.topViewController?.dismiss(animated: true)
         }
-
+        
         configureNewViewController.modalPresentationStyle = .popover
         configureNewViewController.preferredContentSize = CGSize(width: 600, height: 150)
         self.present(configureNewViewController, animated: true, completion: nil)
-
+        
         let popoverPresentationViewController = configureNewViewController.popoverPresentationController
         popoverPresentationViewController?.delegate = self
         popoverPresentationViewController?.permittedArrowDirections = .up
@@ -76,10 +76,10 @@ extension PlaylistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return SectionHeaderView(title: categories[section])
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int { return categories.count }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 1 }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlaylistRow.className, for: indexPath) as! PlaylistRow
         cell.configure(items: self.videos[self.categories[indexPath.section]] ?? []) { item in
@@ -99,18 +99,18 @@ extension PlaylistViewController : UITableViewDelegate {
 fileprivate extension PlaylistViewController {
     private func fetchPlaylist() {
         guard var playlistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") else { return }
-
+        
         self.categories.removeAll()
         self.videos.removeAll()
-
+        
         let playlistRepository: PlaylistSourcing = PlaylistRepository()
         let dispatchGroup = DispatchGroup()
-
+        
         playlistIds.enumerated().forEach {
             dispatchGroup.enter();
             let playlistItem = $0
             let pathString = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\(playlistItem.element)&maxResults=50&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw"
-
+            
             print(pathString)
             playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
                 guard let response = playlistResponse, let firstItem = response.items.first else {
@@ -118,13 +118,13 @@ fileprivate extension PlaylistViewController {
                     UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
                     dispatchGroup.leave(); return
                 }
-
+                
                 self?.categories.append(firstItem.snippet.channelTitle)
                 self?.videos.updateValue(response.items, forKey: firstItem.snippet.channelTitle)
                 dispatchGroup.leave()
             }
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             self.tableView.reloadData()
         }
