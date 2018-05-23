@@ -15,6 +15,7 @@ class ConfigureNewPlaylistViewController: UIViewController {
     private lazy var textField: UITextField = {
         $0.font = Stylesheet.Font.description
         $0.textColor = Stylesheet.Color.secondaryGray
+        $0.placeholder = "Tap to enter a playlist Id"
         $0.layer.cornerRadius = 8.0
         $0.layer.borderColor = Stylesheet.Color.secondaryGray.cgColor
         $0.layer.borderWidth = 1.0
@@ -25,7 +26,6 @@ class ConfigureNewPlaylistViewController: UIViewController {
         $0.font = Stylesheet.Font.description
         $0.textColor = Stylesheet.Color.secondaryRed
         $0.textAlignment = .right
-        $0.text = "Please correct the text"
         return $0
     }(UILabel(frame: .zero))
 
@@ -76,7 +76,11 @@ class ConfigureNewPlaylistViewController: UIViewController {
 
     private func bindActions() {
         button.onTap {
-            self.configureHandler(self.textField.text ?? "")
+            guard let text = self.textField.text else {
+                self.titleLabel.text = "Error in Playlist Id."
+                return
+            }
+            self.configureHandler(text)
         }
     }
 }

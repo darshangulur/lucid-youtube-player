@@ -98,7 +98,7 @@ extension PlaylistViewController : UITableViewDelegate {
 
 fileprivate extension PlaylistViewController {
     private func fetchPlaylist() {
-        guard let playlistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") else { return }
+        guard var playlistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") else { return }
 
         self.categories.removeAll()
         self.videos.removeAll()
@@ -114,6 +114,8 @@ fileprivate extension PlaylistViewController {
             print(pathString)
             playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
                 guard let response = playlistResponse, let firstItem = response.items.first else {
+                    playlistIds.removeAll(playlistItem.element)
+                    UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
                     dispatchGroup.leave(); return
                 }
 

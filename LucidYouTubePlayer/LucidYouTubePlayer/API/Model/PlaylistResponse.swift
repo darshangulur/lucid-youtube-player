@@ -78,6 +78,7 @@ struct PlaylistResponse: Codable {
     
     let kind: String
     let etag: String
+    let nextPageToken: String
     let pageInfo: PageInfo
     let items: [Item]
 }
