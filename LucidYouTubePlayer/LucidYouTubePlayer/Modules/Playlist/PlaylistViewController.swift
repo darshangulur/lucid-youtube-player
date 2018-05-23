@@ -83,8 +83,8 @@ extension PlaylistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlaylistRow.className, for: indexPath) as! PlaylistRow
         cell.configure(items: self.videos[self.categories[indexPath.section]] ?? []) { item in
-            let player = YTPlayerViewController(videoId: item.snippet.resourceId.videoId)
-            self.navigationController?.present(player, animated: true)
+            let player = YTPlayerViewController(videoTitle: item.snippet.title, videoId: item.snippet.resourceId.videoId)
+            self.navigationController?.pushViewController(player)
         }
         return cell
     }
