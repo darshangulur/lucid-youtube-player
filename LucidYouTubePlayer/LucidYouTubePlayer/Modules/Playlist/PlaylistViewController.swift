@@ -8,6 +8,7 @@
 
 import UIKit
 import TinyConstraints
+import SVProgressHUD
 
 final class PlaylistViewController: UIViewController {
     
@@ -112,6 +113,7 @@ fileprivate extension PlaylistViewController {
             let pathString = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\(playlistItem.element)&maxResults=50&key=AIzaSyDBK7Rf8Kup64cWymKwMZeAEOS_x_G0gCw"
             
             print(pathString)
+            SVProgressHUD.show()
             playlistRepository.fetchPlaylist(forURL: pathString) { [weak self] playlistResponse in
                 guard let response = playlistResponse, let firstItem = response.items.first else {
                     playlistIds.removeAll(playlistItem.element)
@@ -127,6 +129,7 @@ fileprivate extension PlaylistViewController {
         
         dispatchGroup.notify(queue: .main) {
             self.tableView.reloadData()
+            SVProgressHUD.dismiss()
         }
     }
 }
