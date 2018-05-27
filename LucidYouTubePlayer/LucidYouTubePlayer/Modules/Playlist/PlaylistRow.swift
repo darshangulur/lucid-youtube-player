@@ -54,6 +54,7 @@ final class PlaylistRow : UITableViewCell {
     func configure(items: [PlaylistResponse.Item], didTapHandler: @escaping ((PlaylistResponse.Item) -> Void)) {
         self.items = items
         self.didTapHandler = didTapHandler
+        collectionView.reloadData()
     }
 }
 
