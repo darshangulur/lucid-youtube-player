@@ -37,7 +37,7 @@ public extension UIBarButtonItem {
         self.init(image: image, style: style, target: nil, action: nil)
         onTap(handler: handler)
     }
-    
+
     /**
      A convenience initializer for a UIBarButtonItem so that the tap event can
      be handled with a closure. This is equivalent of using the init(image:landscapeImagePhone:style:target:action:)
@@ -53,7 +53,7 @@ public extension UIBarButtonItem {
         self.init(image: image, landscapeImagePhone: landscapeImagePhone, style: style, target: nil, action: nil)
         onTap(handler: handler)
     }
-    
+
     /**
      A convenience initializer for a UIBarButtonItem so that the tap event can
      be handled with a closure. This is equivalent of using the init(title:style:target:action:)
@@ -67,7 +67,7 @@ public extension UIBarButtonItem {
         self.init(title: title, style: style, target: nil, action: nil)
         onTap(handler: handler)
     }
-    
+
     /**
      A convenience initializer for a UIBarButtonItem so that the tap event can
      be handled with a closure. This is equivalent of using the init(barButtonSystemItem:target:action:)
@@ -80,7 +80,7 @@ public extension UIBarButtonItem {
         self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
         onTap(handler: handler)
     }
-    
+
     /**
      This method is a convenience method to add a closure handler to a `UIBarButtonItem`.
      Use this method if you are creating a `UIBarButtonItem` using an initializer
@@ -101,7 +101,7 @@ public extension UIBarButtonItem {
     public func onTap(handler: @escaping () -> Void) {
         target = self
         action = #selector(UIBarButtonItem.buttonTapped)
-        NotificationCenter.selfObserve(name: .barButtonItemTapped, target: self) { button, userInfo in
+        NotificationCenter.selfObserve(name: .barButtonItemTapped, target: self) { _, _ in
             handler()
         }
     }

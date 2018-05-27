@@ -24,18 +24,18 @@ import PhotosUI
 
 fileprivate final class ImagePickerControllerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIImagePickerController, ImagePickerControllerDelegate>>()
-    
+
     fileprivate var didFinishPickingMedia: ((_ withInfo: [String: Any]) -> Void)?
     fileprivate func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [String: Any]) {
         didFinishPickingMedia?(info)
     }
-    
+
     fileprivate var didCancel: (() -> Void)?
     fileprivate func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         didCancel?()
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
         case #selector(ImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)):
@@ -118,11 +118,11 @@ extension UIImagePickerController {
             didPick(UIImagePickerController.Result(rawInfo: $0), self)
         }
     }
-    
+
     public static func dismissFromPresenting(_ picker: UIImagePickerController) {
         picker.presentingViewController?.dismiss(animated: true)
     }
-    
+
     /**
      A convenience method that will present the UIImagePickerController. It will
      also do the following as default behavior, which can be overriden at anytime:
@@ -181,7 +181,7 @@ extension UIImagePickerController {
     public func didFinishPickingMedia(handler: @escaping (_ withInfo: [String: Any]) -> Void) -> Self {
         return update { $0.didFinishPickingMedia = handler }
     }
-    
+
     /**
      Equivalent to implementing UIImagePickerControllerDelegate's imagePickerControllerDidCancel(_:) method
      
@@ -223,7 +223,7 @@ extension UIImagePickerController {
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
-        
+
         /**
          Tells the UIImagePickerController to allow images
          to be seleced.
@@ -239,9 +239,9 @@ extension UIImagePickerController {
          explicitly supported `MediaFilter` types to be seleced.
          */
         public static let all: MediaFilter = [.image, .movie]
-        
+
         fileprivate static let allTypes: [MediaFilter] = [.image, .movie]
-        
+
         fileprivate var mediaType: String {
             switch self {
             case .image:
@@ -253,7 +253,7 @@ extension UIImagePickerController {
             }
         }
     }
-    
+
     /**
      This result object is a only a wrapper around the loosely
      typed Dictionary returned from `UIImagePickerController`'s
@@ -303,7 +303,7 @@ extension UIImagePickerController {
          This is equivalent to the `UIImagePickerControllerMediaMetadata` key value from `rawInfo`.
          */
         public let metaData: NSDictionary?
-        
+
         init(rawInfo: [String: Any]) {
             self.rawInfo = rawInfo
             type = (rawInfo[UIImagePickerControllerMediaType] as! CFString).mediaFilter
@@ -347,7 +347,7 @@ extension UIImagePickerController: DelegatorProtocol {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate closures that were assigned to this
@@ -359,7 +359,7 @@ extension UIImagePickerController: DelegatorProtocol {
         DelegateWrapper.remove(delegator: self, from: &ImagePickerControllerDelegate.delegates)
         UIImagePickerController.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UIImagePickerController, _ delegate: ImagePickerControllerDelegate?) {
         delegator.delegate = nil
         delegator.delegate = delegate

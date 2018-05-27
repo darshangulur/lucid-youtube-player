@@ -68,36 +68,35 @@ extension UICollectionView {
      * returns: itself so you can daisy chain the other datasource calls
      */
     @discardableResult
-    public func addFlowElements<Element,Cell>(
+    public func addFlowElements<Element, Cell>(
         _ elements: [Element],
         cell: Cell.Type,
         cellNibName: String? = nil,
-        item: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        item: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UICollectionViewCell {
             return _addSections([elements], cell: cell, cellNibName: cellNibName, item: item)
     }
-    
+
     @discardableResult
-    private func _addSections<Element,Cell>(
+    private func _addSections<Element, Cell>(
         _ elements: [[Element]],
         cell: Cell.Type,
         cellNibName: String? = nil,
-        item: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        item: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UICollectionViewCell {
-            
+
             DelegateWrapper.remove(delegator: self, from: &CollectionViewDelegate.delegates)
             delegate = nil
             dataSource = nil
             let reuseIdentifier = "\(Element.self).\(cell)"
-            
+
             if let nibName = cellNibName {
                 register(UINib(nibName: nibName, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
             } else {
                 register(Cell.self, forCellWithReuseIdentifier: reuseIdentifier)
             }
-            
-            return numberOfSectionsIn
-                {
+
+            return numberOfSectionsIn {
                     return elements.count
                 }.numberOfItemsInSection {
                     return elements[$0].count
@@ -143,19 +142,19 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var willDisplay: ((_ cell: UICollectionViewCell, _ indexPath: IndexPath) -> Void)?
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        willDisplay?(cell,indexPath)
+        willDisplay?(cell, indexPath)
     }
     fileprivate var willDisplaySupplementaryView: ((_ elementKind: String, _ indexPath: IndexPath) -> Void)?
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        willDisplaySupplementaryView?(elementKind,indexPath)
+        willDisplaySupplementaryView?(elementKind, indexPath)
     }
     fileprivate var didEndDisplaying: ((_ cell: UICollectionViewCell, _ indexPath: IndexPath) -> Void)?
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        didEndDisplaying?(cell,indexPath)
+        didEndDisplaying?(cell, indexPath)
     }
     fileprivate var didEndDisplayingSupplementaryView: ((_ elementKind: String, _ indexPath: IndexPath) -> Void)?
     func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        didEndDisplayingSupplementaryView?(elementKind,indexPath)
+        didEndDisplayingSupplementaryView?(elementKind, indexPath)
     }
     fileprivate var shouldShowMenuForItemAt: ((_ indexPath: IndexPath) -> Bool)?
     func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -171,7 +170,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var transitionLayoutForOldLayout: ((_ fromLayout: UICollectionViewLayout, _ toLayout: UICollectionViewLayout) -> UICollectionViewTransitionLayout)?
     func collectionView(_ collectionView: UICollectionView, transitionLayoutForOldLayout fromLayout: UICollectionViewLayout, newLayout toLayout: UICollectionViewLayout) -> UICollectionViewTransitionLayout {
-        return transitionLayoutForOldLayout?(fromLayout,toLayout) ?? UICollectionViewTransitionLayout(currentLayout: fromLayout, nextLayout: toLayout)
+        return transitionLayoutForOldLayout?(fromLayout, toLayout) ?? UICollectionViewTransitionLayout(currentLayout: fromLayout, nextLayout: toLayout)
     }
     fileprivate var canFocusItemAt: ((_ indexPath: IndexPath) -> Bool)?
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
@@ -183,7 +182,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var didUpdateFocusIn: ((_ context: UICollectionViewFocusUpdateContext, _ coordinator: UIFocusAnimationCoordinator) -> Void)?
     func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        didUpdateFocusIn?(context,coordinator)
+        didUpdateFocusIn?(context, coordinator)
     }
     fileprivate var indexPathForPreferredFocusedViewIn: (() -> IndexPath?)?
     func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
@@ -191,7 +190,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var targetIndexPathForMoveFromItemAt: ((_ originalIndexPath: IndexPath, _ proposedIndexPath: IndexPath) -> IndexPath)?
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-        return targetIndexPathForMoveFromItemAt?(originalIndexPath,proposedIndexPath) ?? proposedIndexPath
+        return targetIndexPathForMoveFromItemAt?(originalIndexPath, proposedIndexPath) ?? proposedIndexPath
     }
     fileprivate var targetContentOffsetForProposedContentOffset: ((_ proposedContentOffset: CGPoint) -> CGPoint)?
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
@@ -225,7 +224,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var viewForSupplementaryElementOfKind: ((_ kind: String, _ indexPath: IndexPath) -> UICollectionReusableView)?
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return viewForSupplementaryElementOfKind?(kind,indexPath) ?? UICollectionReusableView()
+        return viewForSupplementaryElementOfKind?(kind, indexPath) ?? UICollectionReusableView()
     }
     fileprivate var canMoveItemAt: ((_ indexPath: IndexPath) -> Bool)?
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -233,7 +232,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var moveItemAt: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath) -> Void)?
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        moveItemAt?(sourceIndexPath,destinationIndexPath)
+        moveItemAt?(sourceIndexPath, destinationIndexPath)
     }
     fileprivate var indexTitlesFor: (() -> [String])?
     func indexTitles(for collectionView: UICollectionView) -> [String]? {
@@ -241,7 +240,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
     fileprivate var indexPathForIndexTitle: ((_ title: String, _ index: Int) -> IndexPath)?
     func collectionView(_ collectionView: UICollectionView, indexPathForIndexTitle title: String, at index: Int) -> IndexPath {
-        return indexPathForIndexTitle?(title,index) ?? IndexPath()
+        return indexPathForIndexTitle?(title, index) ?? IndexPath()
     }
     fileprivate var sizeForItemAt: ((_ indexPath: IndexPath) -> CGSize)?
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -267,7 +266,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return referenceSizeForFooterInSection?(section) ?? (collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? .zero
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         if #available(iOS 11, *) {
             switch aSelector {
@@ -277,7 +276,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
                 break
             }
         }
-        
+
         switch aSelector {
         case #selector(CollectionViewDelegate.collectionView(_:shouldHighlightItemAt:)):
             return shouldHighlightItemAt != nil
@@ -766,7 +765,7 @@ extension UICollectionView {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate/dataSource closures that were assigned to this
@@ -778,7 +777,7 @@ extension UICollectionView {
         DelegateWrapper.remove(delegator: self, from: &CollectionViewDelegate.delegates)
         UICollectionView.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UICollectionView, _ delegate: CollectionViewDelegate?) {
         delegator.delegate = nil
         delegator.dataSource = nil

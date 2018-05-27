@@ -68,15 +68,15 @@ extension UITableView {
      * returns: itself so you can daisy chain the other datasource calls
      */
     @discardableResult
-    public func addElements<Element,Cell>(
+    public func addElements<Element, Cell>(
         _ elements: [Element],
         cell: Cell.Type,
         cellNibName: String? = nil,
-        row: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        row: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UITableViewCell {
             return addSections([elements], cell: cell, cellNibName: cellNibName, row: row)
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UITableView when using an `Array` as a data source.
@@ -128,20 +128,20 @@ extension UITableView {
      * returns: itself so you can daisy chain the other datasource calls
      */
     @discardableResult
-    public func addSections<Element,Cell>(
+    public func addSections<Element, Cell>(
         _ elements: [[Element]],
         cell: Cell.Type,
         cellNibName: String? = nil,
         headerView: @escaping ((_ elements: [Element], _ index: Int) -> UIView),
-        row: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        row: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UITableViewCell {
-            
+
             return _addSections(elements, cell: cell, cellNibName: cellNibName, row: row)
-                .viewForHeaderInSection() {
+                .viewForHeaderInSection {
                     return headerView(elements[$0], $0)
             }
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UITableView when using an `Array` as a data source.
@@ -193,42 +193,41 @@ extension UITableView {
      * returns: itself so you can daisy chain the other datasource calls
      */
     @discardableResult
-    public func addSections<Element,Cell>(
+    public func addSections<Element, Cell>(
         _ elements: [[Element]],
         cell: Cell.Type,
         cellNibName: String? = nil,
         headerTitle: ((_ elements: [Element], _ index: Int) -> String)? = nil,
-        row: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        row: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UITableViewCell {
-            
+
             _addSections(elements, cell: cell, cellNibName: cellNibName, row: row)
             if let headerTitle = headerTitle {
                 titleForHeaderInSection {headerTitle(elements[$0], $0)}
             }
             return self
     }
-    
+
     @discardableResult
-    private func _addSections<Element,Cell>(
+    private func _addSections<Element, Cell>(
         _ elements: [[Element]],
         cell: Cell.Type,
         cellNibName: String? = nil,
-        row: @escaping (_ element: Element, _ cell: inout Cell,_ index: Int) -> Void) -> Self
+        row: @escaping (_ element: Element, _ cell: inout Cell, _ index: Int) -> Void) -> Self
         where Cell: UITableViewCell {
-            
+
             DelegateWrapper.remove(delegator: self, from: &TableViewDelegate.delegates)
             delegate = nil
             dataSource = nil
             let reuseIdentifier = "\(Element.self).\(cell)"
-            
+
             if let nibName = cellNibName {
                 register(UINib(nibName: nibName, bundle: nil), forCellReuseIdentifier: reuseIdentifier)
             } else {
                 register(Cell.self, forCellReuseIdentifier: reuseIdentifier)
             }
-            
-            return numberOfSectionsIn
-                {
+
+            return numberOfSectionsIn {
                     return elements.count
                 }.numberOfRows {
                     return elements[$0].count
@@ -243,7 +242,7 @@ extension UITableView {
 
 class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     fileprivate static var delegates = Set<DelegateWrapper<UITableView, TableViewDelegate>>()
-    
+
     fileprivate var willDisplay: ((_ cell: UITableViewCell, _ forRowAt: IndexPath) -> Void)?
     fileprivate var willDisplayHeaderView: ((_ view: UIView, _ forSection: Int) -> Void)?
     fileprivate var willDisplayFooterView: ((_ view: UIView, _ section: Int) -> Void)?
@@ -322,7 +321,7 @@ class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDat
             _shouldSpringLoadRowAt = newValue
         }
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         if #available(iOS 11, *) {
             switch aSelector {
@@ -336,7 +335,7 @@ class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDat
                 break
             }
         }
-        
+
         switch aSelector {
         case #selector(TableViewDelegate.tableView(_:willDisplay:forRowAt:)):
             return willDisplay != nil
@@ -444,204 +443,204 @@ extension TableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         willDisplay?(cell, indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         willDisplayHeaderView?(view, section)
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         willDisplayFooterView?(view, section)
     }
-    
+
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         didEndDisplaying?(cell, indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
         didEndDisplayingHeaderView?(view, section)
     }
-    
+
     func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
         didEndDisplayingFooterView?(view, section)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return heightForRowAt?(indexPath) ??  tableView.rowHeight
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return heightForHeaderInSection?(section) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return heightForFooterInSection?(section) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return estimatedHeightForRowAt?(indexPath) ??  UITableViewAutomaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return estimatedHeightForHeaderInSection?(section) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         return estimatedHeightForFooterInSection?(section) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return viewForHeaderInSection?(section) ??  nil
     }
-    
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return viewForFooterInSection?(section) ??  nil
     }
-    
+
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         accessoryButtonTappedForRowWith?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return shouldHighlightRowAt?(indexPath) ??  true
     }
-    
+
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         didHighlightRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         didUnhighlightRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return willSelectRowAt?(indexPath) ??  indexPath
     }
-    
+
     func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
         return willDeselectRowAt?(indexPath) ??  indexPath
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelectRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         didDeselectRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return editingStyleForRowAt?(indexPath) ??  .delete
     }
-    
+
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return titleForDeleteConfirmationButtonForRowAt?(indexPath) ??  Bundle(identifier: "com.apple.UIKit")?.localizedString(forKey: "Delete", value: nil, table: nil)
     }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?  {
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         return editActionsForRowAt?(indexPath) ??  nil
     }
-    
+
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return shouldIndentWhileEditingRowAt?(indexPath) ??  true
     }
-    
+
     func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
         willBeginEditingRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
         didEndEditingRowAt?(indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         return targetIndexPathForMoveFromRowAt?(sourceIndexPath, proposedDestinationIndexPath) ??  proposedDestinationIndexPath
     }
-    
+
     func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
         return indentationLevelForRowAt?(indexPath) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
         return shouldShowMenuForRowAt?(indexPath) ??  false
     }
-    
+
     func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return canPerformAction?(action, indexPath, sender) ??  false
     }
-    
+
     func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
         performAction?(action, indexPath, sender)
     }
-    
+
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         return canFocusRowAt?(indexPath) ??  true
     }
-    
+
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
         return shouldUpdateFocus?(context) ??  true
     }
-    
+
     func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         didUpdateFocus?(context, coordinator)
     }
-    
+
     func indexPathForPreferredFocusedView(in tableView: UITableView) -> IndexPath? {
         return indexPathForPreferredFocusedView?()
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRows?(section) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellForRow?(indexPath) ??  UITableViewCell()
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections?() ?? 1
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return titleForHeaderInSection?(section) ??  nil
     }
-    
+
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return titleForFooterInSection?(section) ??  nil
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return canEditRowAt?(indexPath) ??  true
     }
-    
+
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return canMoveRowAt?(indexPath) ??  true
     }
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return sectionIndexTitles?() ?? nil
     }
-    
+
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         return sectionForSectionIndexTitle?(title, index) ??  0
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         commit?(editingStyle, indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         moveRowAt?(sourceIndexPath, destinationIndexPath)
     }
-    
+
     @available(iOS 11, *)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         return leadingSwipeActionsConfigurationForRowAt?(indexPath)
     }
-    
+
     @available(iOS 11, *)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         return trailingSwipeActionsConfigurationForRowAt?(indexPath)
     }
-    
+
     @available(iOS 11, *)
     func tableView(_ tableView: UITableView, shouldSpringLoadRowAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
         return shouldSpringLoadRowAt?(indexPath, context) ?? true
@@ -661,7 +660,7 @@ extension UITableView {
     public func willDisplay(handler: @escaping (_ cell: UITableViewCell, _ forRowAt: IndexPath) -> Void) -> Self {
         return update { $0.willDisplay = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:willDisplayHeaderView:forSection:) method
      
@@ -673,7 +672,7 @@ extension UITableView {
     public func willDisplayHeaderView(handler: @escaping (_ view: UIView, _ forSection: Int) -> Void) -> Self {
         return update { $0.willDisplayHeaderView = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:willDisplayFooterView:forSection:) method
      
@@ -685,7 +684,7 @@ extension UITableView {
     public func willDisplayFooterView(handler: @escaping (_ view: UIView, _ section: Int) -> Void) -> Self {
         return update { $0.willDisplayFooterView = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didEndDisplaying:forRowAt:) method
      
@@ -697,7 +696,7 @@ extension UITableView {
     public func didEndDisplaying(handler: @escaping (_ cell: UITableViewCell, _ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.didEndDisplaying = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didEndDisplayingHeaderView:forSection:) method
      
@@ -709,7 +708,7 @@ extension UITableView {
     public func didEndDisplayingHeaderView(handler: @escaping (_ view: UIView, _ section: Int) -> Void) -> Self {
         return update { $0.didEndDisplayingHeaderView = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didEndDisplayingFooterView:forSection:) method
      
@@ -721,7 +720,7 @@ extension UITableView {
     public func didEndDisplayingFooterView(handler: @escaping (_ view: UIView, _ section: Int) -> Void) -> Self {
         return update { $0.didEndDisplayingFooterView = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:heightForRowAt:) method
      
@@ -733,7 +732,7 @@ extension UITableView {
     public func heightForRowAt(handler: @escaping (_ indexPath: IndexPath) -> CGFloat) -> Self {
         return update { $0.heightForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:heightForHeaderInSection:) method
      
@@ -745,7 +744,7 @@ extension UITableView {
     public func heightForHeaderInSection(handler: @escaping (_ section: Int) -> CGFloat) -> Self {
         return update { $0.heightForHeaderInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:heightForFooterInSection:) method
      
@@ -757,7 +756,7 @@ extension UITableView {
     public func heightForFooterInSection(handler: @escaping (_ section: Int) -> CGFloat) -> Self {
         return update { $0.heightForFooterInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:estimatedHeightForRowAt:) method
      
@@ -769,7 +768,7 @@ extension UITableView {
     public func estimatedHeightForRowAt(handler: @escaping (_ indexPath: IndexPath) -> CGFloat) -> Self {
         return update { $0.estimatedHeightForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:estimatedHeightForHeaderInSection:) method
      
@@ -781,7 +780,7 @@ extension UITableView {
     public func estimatedHeightForHeaderInSection(handler: @escaping (_ section: Int) -> CGFloat) -> Self {
         return update { $0.estimatedHeightForHeaderInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:estimatedHeightForFooterInSection:) method
      
@@ -793,7 +792,7 @@ extension UITableView {
     public func estimatedHeightForFooterInSection(handler: @escaping (_ section: Int) -> CGFloat) -> Self {
         return update { $0.estimatedHeightForFooterInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:viewForHeaderInSection:) method
      
@@ -805,7 +804,7 @@ extension UITableView {
     public func viewForHeaderInSection(handler: @escaping (_ section: Int) -> UIView?) -> Self {
         return update { $0.viewForHeaderInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:viewForFooterInSection:) method
      
@@ -817,7 +816,7 @@ extension UITableView {
     public func viewForFooterInSection(handler: @escaping (_ section: Int) -> UIView?) -> Self {
         return update { $0.viewForFooterInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:accessoryButtonTappedForRowWith:) method
      
@@ -829,7 +828,7 @@ extension UITableView {
     public func accessoryButtonTappedForRowWith(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.accessoryButtonTappedForRowWith = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:shouldHighlightRowAt:) method
      
@@ -841,7 +840,7 @@ extension UITableView {
     public func shouldHighlightRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.shouldHighlightRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didHighlightRowAt:) method
      
@@ -853,7 +852,7 @@ extension UITableView {
     public func didHighlightRowAt(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.didHighlightRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didUnhighlightRowAt:) method
      
@@ -865,7 +864,7 @@ extension UITableView {
     public func didUnhighlightRowAt(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.didUnhighlightRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:willSelectRowAt:) method
      
@@ -877,7 +876,7 @@ extension UITableView {
     public func willSelectRowAt(handler: @escaping (_ indexPath: IndexPath) -> IndexPath?) -> Self {
         return update { $0.willSelectRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:willDeselectRowAt:) method
      
@@ -889,7 +888,7 @@ extension UITableView {
     public func willDeselectRowAt(handler: @escaping (_ indexPath: IndexPath) -> IndexPath?) -> Self {
         return update { $0.willDeselectRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didSelectRowAt:) method
      
@@ -901,7 +900,7 @@ extension UITableView {
     public func didSelectRowAt(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.didSelectRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didDeselectRowAt:) method
      
@@ -913,7 +912,7 @@ extension UITableView {
     public func didDeselectRowAt(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.didDeselectRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:editingStyleForRowAt:) method
      
@@ -925,7 +924,7 @@ extension UITableView {
     public func editingStyleForRowAt(handler: @escaping (_ indexPath: IndexPath) -> UITableViewCellEditingStyle) -> Self {
         return update { $0.editingStyleForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:titleForDeleteConfirmationButtonForRowAt:) method
      
@@ -937,7 +936,7 @@ extension UITableView {
     public func titleForDeleteConfirmationButtonForRowAt(handler: @escaping (_ indexPath: IndexPath) -> String?) -> Self {
         return update { $0.titleForDeleteConfirmationButtonForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:editActionsForRowAt:) method
      
@@ -949,7 +948,7 @@ extension UITableView {
     public func editActionsForRowAt(handler: @escaping (_ indexPath: IndexPath) -> [UITableViewRowAction]?) -> Self {
         return update { $0.editActionsForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:shouldIndentWhileEditingRowAt:) method
      
@@ -961,7 +960,7 @@ extension UITableView {
     public func shouldIndentWhileEditingRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.shouldIndentWhileEditingRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:willBeginEditingRowAt:) method
      
@@ -973,7 +972,7 @@ extension UITableView {
     public func willBeginEditingRowAt(handler: @escaping (_ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.willBeginEditingRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didEndEditingRowAt:) method
      
@@ -985,7 +984,7 @@ extension UITableView {
     public func didEndEditingRowAt(handler: @escaping (_ indexPath: IndexPath?) -> Void) -> Self {
         return update { $0.didEndEditingRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:targetIndexPathForMoveFromRowAt:toProposedIndexPath:) method
      
@@ -997,7 +996,7 @@ extension UITableView {
     public func targetIndexPathForMoveFromRowAt(handler: @escaping (_ sourceIndexPath: IndexPath, _ proposedDestinationIndexPath: IndexPath) -> IndexPath) -> Self {
         return update { $0.targetIndexPathForMoveFromRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:indentationLevelForRowAt:) method
      
@@ -1009,7 +1008,7 @@ extension UITableView {
     public func indentationLevelForRowAt(handler: @escaping (_ indexPath: IndexPath) -> Int) -> Self {
         return update { $0.indentationLevelForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:shouldShowMenuForRowAt:) method
      
@@ -1021,7 +1020,7 @@ extension UITableView {
     public func shouldShowMenuForRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.shouldShowMenuForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:canPerformAction:forRowAt:withSender:) method
      
@@ -1033,7 +1032,7 @@ extension UITableView {
     public func canPerformAction(handler: @escaping (_ action: Selector, _ indexPath: IndexPath, _ sender: Any?) -> Bool) -> Self {
         return update { $0.canPerformAction = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:performAction:forRowAt:withSender:) method
      
@@ -1045,7 +1044,7 @@ extension UITableView {
     public func performAction(handler: @escaping (_ action: Selector, _ indexPath: IndexPath, _ sender: Any?) -> Void) -> Self {
         return update { $0.performAction = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:canFocusRowAt:) method
      
@@ -1057,7 +1056,7 @@ extension UITableView {
     public func canFocusRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.canFocusRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:shouldUpdateFocusIn:) method
      
@@ -1069,7 +1068,7 @@ extension UITableView {
     public func shouldUpdateFocus(handler: @escaping (_ context: UITableViewFocusUpdateContext) -> Bool) -> Self {
         return update { $0.shouldUpdateFocus = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:didUpdateFocusIn:with:) method
      
@@ -1081,7 +1080,7 @@ extension UITableView {
     public func didUpdateFocus(handler: @escaping (_ context: UITableViewFocusUpdateContext, _ coordinator: UIFocusAnimationCoordinator) -> Void) -> Self {
         return update { $0.didUpdateFocus = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's indexPathForPreferredFocusedView(in:) method
      
@@ -1093,7 +1092,7 @@ extension UITableView {
     public func indexPathForPreferredFocusedView(handler: @escaping () -> IndexPath?) -> Self {
         return update { $0.indexPathForPreferredFocusedView = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:numberOfRowsInSection:) method
      
@@ -1105,7 +1104,7 @@ extension UITableView {
     public func numberOfRows(handler: @escaping (_ section: Int) -> Int) -> Self {
         return update { $0.numberOfRows = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:cellForRowAt:) method
      
@@ -1117,7 +1116,7 @@ extension UITableView {
     public func cellForRow(handler: @escaping (_ indexPath: IndexPath) -> UITableViewCell) -> Self {
         return update { $0.cellForRow = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's numberOfSections(in:) method
      
@@ -1129,7 +1128,7 @@ extension UITableView {
     public func numberOfSectionsIn(handler: @escaping () -> Int) -> Self {
         return update { $0.numberOfSections = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:titleForHeaderInSection:) method
      
@@ -1141,7 +1140,7 @@ extension UITableView {
     public func titleForHeaderInSection(handler: @escaping (_ section: Int) -> String?) -> Self {
         return update { $0.titleForHeaderInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:titleForFooterInSection:) method
      
@@ -1153,7 +1152,7 @@ extension UITableView {
     public func titleForFooterInSection(handler: @escaping (_ section: Int) -> String?) -> Self {
         return update { $0.titleForFooterInSection = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:canEditRowAt:) method
      
@@ -1165,7 +1164,7 @@ extension UITableView {
     public func canEditRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.canEditRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:canMoveRowAt:) method
      
@@ -1177,7 +1176,7 @@ extension UITableView {
     public func canMoveRowAt(handler: @escaping (_ indexPath: IndexPath) -> Bool) -> Self {
         return update { $0.canMoveRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's sectionIndexTitles(for:) method
      
@@ -1189,7 +1188,7 @@ extension UITableView {
     public func sectionIndexTitles(handler: @escaping () -> [String]?) -> Self {
         return update { $0.sectionIndexTitles = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:sectionForSectionIndexTitle:at:) method
      
@@ -1201,7 +1200,7 @@ extension UITableView {
     public func sectionForSectionIndexTitle(handler: @escaping (_ title: String, _ index: Int) -> Int) -> Self {
         return update { $0.sectionForSectionIndexTitle = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:commit:forRowAt:) method
      
@@ -1213,7 +1212,7 @@ extension UITableView {
     public func commit(handler: @escaping (_ editingStyle: UITableViewCellEditingStyle, _ indexPath: IndexPath) -> Void) -> Self {
         return update { $0.commit = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDataSource's tableView(_:moveRowAt:to:) method
      
@@ -1225,7 +1224,7 @@ extension UITableView {
     public func moveRowAt(handler: @escaping (_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath) -> Void) -> Self {
         return update { $0.moveRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:leadingSwipeActionsConfigurationForRowAt:) method
      
@@ -1237,7 +1236,7 @@ extension UITableView {
     public func leadingSwipeActionsConfigurationForRowAt(handler: @escaping (_ indexPath: IndexPath) -> UISwipeActionsConfiguration?) -> Self {
         return update { $0.leadingSwipeActionsConfigurationForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:trailingSwipeActionsConfigurationForRowAt:) method
      
@@ -1249,7 +1248,7 @@ extension UITableView {
     public func trailingSwipeActionsConfigurationForRowAt(handler: @escaping (_ indexPath: IndexPath) -> UISwipeActionsConfiguration?) -> Self {
         return update { $0.trailingSwipeActionsConfigurationForRowAt = handler }
     }
-    
+
     /**
      Equivalent to implementing UITableViewDelegate's tableView(_:shouldSpringLoadRowAt:) method
      
@@ -1274,7 +1273,7 @@ extension UITableView {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate/dataSource closures that were assigned to this
@@ -1286,7 +1285,7 @@ extension UITableView {
         DelegateWrapper.remove(delegator: self, from: &TableViewDelegate.delegates)
         UITableView.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UITableView, _ delegate: TableViewDelegate?) {
         delegator.delegate = nil
         delegator.dataSource = nil

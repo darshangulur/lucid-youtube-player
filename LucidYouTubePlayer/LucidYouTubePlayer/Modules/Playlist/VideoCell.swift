@@ -10,7 +10,7 @@ import UIKit
 import TinyConstraints
 import  SDWebImage
 
-final class VideoCell : UICollectionViewCell {
+final class VideoCell: UICollectionViewCell {
 
     // MARK: - Private properties
     private lazy var imageView: UIImageView = {
@@ -95,7 +95,6 @@ final class SectionHeaderView: UIView {
         self.title = title
         super.init(frame: .zero)
         self.backgroundColor = Stylesheet.Color.primaryWhite
-
 
         addSubviews()
         configure()

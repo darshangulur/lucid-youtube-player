@@ -22,47 +22,47 @@ import UIKit
 
 fileprivate final class PickerViewDelegate: NSObject, UIPickerViewDelegate, UIPickerViewDataSource, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIPickerView, PickerViewDelegate>>()
-    
+
     fileprivate var rowHeightForComponent: ((_ component: Int) -> CGFloat)?
     fileprivate func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return rowHeightForComponent?(component) ?? 0
     }
-    
+
     fileprivate var widthForComponent: ((_ component: Int) -> CGFloat)?
     fileprivate func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return widthForComponent?(component) ?? 0
     }
-    
+
     fileprivate var titleForRow: ((_ row: Int, _ component: Int) -> String?)?
     fileprivate func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return titleForRow?(row, component)
     }
-    
+
     fileprivate var attributedTitleForRow: ((_ row: Int, _ component: Int) -> NSAttributedString?)?
     fileprivate func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         return attributedTitleForRow?(row, component)
     }
-    
+
     fileprivate var viewForRow: ((_ row: Int, _ component: Int, _ reusingView: UIView?) -> UIView)?
     fileprivate func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         return viewForRow?(row, component, view) ?? UIView()
     }
-    
+
     fileprivate var didSelectRow: ((_ row: Int, _ component: Int) -> Void)?
     fileprivate func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         didSelectRow?(row, component)
     }
-    
+
     fileprivate var numberOfComponents: (() -> Int)?
     fileprivate func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return numberOfComponents?() ?? 1
     }
-    
+
     fileprivate var numberOfRowsInComponent: ((_ component: Int) -> Int)?
     fileprivate func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return numberOfRowsInComponent?(component) ?? 0
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
         case #selector(PickerViewDelegate.pickerView(_:rowHeightForComponent:)):
@@ -131,7 +131,7 @@ extension UIPickerView {
                            didSelect: @escaping (_ element: String, _ component: Int, _ row: Int) -> Void) -> Self {
         return addComponents([strings], didSelect: didSelect)
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UIPickerView when using an `Array` as a data source.
@@ -186,7 +186,7 @@ extension UIPickerView {
                                      didSelect: @escaping (_ element: Element, _ component: Int, _ row: Int) -> Void) -> Self {
         return addComponents([elements], rowTitle: rowTitle, didSelect: didSelect)
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UIPickerView when using an `Array` as a data source.
@@ -241,7 +241,7 @@ extension UIPickerView {
                                      didSelect: @escaping (_ element: Element, _ component: Int, _ row: Int) -> Void) -> Self {
         return addComponents([elements], rowView: rowView, didSelect: didSelect)
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UIPickerView when using a two-dimensional Array as a data source.
@@ -284,9 +284,9 @@ extension UIPickerView {
     @discardableResult
     public func addComponents(_ strings: [[String]],
                               didSelect: @escaping (_ element: String, _ component: Int, _ row: Int) -> Void) -> Self {
-        return addComponents(strings, rowTitle: {e,_,_ in e}, didSelect: didSelect)
+        return addComponents(strings, rowTitle: {e, _, _ in e}, didSelect: didSelect)
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UIPickerView when using a two-dimensional Array as a data source.
@@ -341,11 +341,11 @@ extension UIPickerView {
     public func addComponents<Element>(_ components: [[Element]],
                                        rowTitle: @escaping (_ element: Element, _ component: Int, _ row: Int) -> String,
                                        didSelect: @escaping (_ element: Element, _ component: Int, _ row: Int) -> Void) -> Self {
-        return configureComponents(components, didSelect: didSelect).titleForRow() { rowIdx, componentIdx in
+        return configureComponents(components, didSelect: didSelect).titleForRow { rowIdx, componentIdx in
             rowTitle(components[componentIdx][rowIdx], componentIdx, rowIdx)
         }
     }
-    
+
     /**
      This method defaults many of the boilerplate callbacks needed to populate a
      UIPickerView when using a two-dimensional Array as a data source.
@@ -400,23 +400,22 @@ extension UIPickerView {
     public func addComponents<Element>(_ components: [[Element]],
                                        rowView: @escaping (_ element: Element, _ reuseView: UIView?, _ component: Int, _ row: Int) -> UIView,
                                        didSelect: @escaping (_ element: Element, _ component: Int, _ row: Int) -> Void) -> Self {
-        return configureComponents(components, didSelect: didSelect).viewForRow() { rowIdx, componentIdx, resuseView in
+        return configureComponents(components, didSelect: didSelect).viewForRow { rowIdx, componentIdx, resuseView in
             rowView(components[componentIdx][rowIdx], resuseView, componentIdx, rowIdx)
         }
     }
-    
+
     private func configureComponents<Element>(_ components: [[Element]],
                                               didSelect: @escaping (_ element: Element, _ component: Int, _ row: Int) -> Void) -> Self {
         DelegateWrapper.remove(delegator: self, from: &PickerViewDelegate.delegates)
         delegate = nil
         dataSource = nil
-        
-        return numberOfComponents
-            {
+
+        return numberOfComponents {
                 components.count
             }.numberOfRowsInComponent {
                 components[$0].count
-            }.didSelectRow() { rowIdx,componentIdx in
+            }.didSelectRow { rowIdx, componentIdx in
                 didSelect(components[componentIdx][rowIdx], componentIdx, rowIdx)
         }
     }
@@ -435,7 +434,7 @@ extension UIPickerView {
     public func rowHeightForComponent(handler: @escaping (_ component: Int) -> CGFloat) -> Self {
         return update { $0.rowHeightForComponent = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDelegate's pickerView(_:widthForComponent:) method
      
@@ -447,7 +446,7 @@ extension UIPickerView {
     public func widthForComponent(handler: @escaping (_ component: Int) -> CGFloat) -> Self {
         return update { $0.widthForComponent = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDelegate's pickerView(_:titleForRow:forComponent:) method
      
@@ -459,7 +458,7 @@ extension UIPickerView {
     public func titleForRow(handler: @escaping (_ row: Int, _ component: Int) -> String?) -> Self {
         return update { $0.titleForRow = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDelegate's pickerView(_:attributedTitleForRow:forComponent:) method
      
@@ -471,7 +470,7 @@ extension UIPickerView {
     public func attributedTitleForRow(handler: @escaping (_ row: Int, _ component: Int) -> NSAttributedString?) -> Self {
         return update { $0.attributedTitleForRow = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDelegate's pickerView(_:viewForRow:forComponent:reusing:) method
      
@@ -483,7 +482,7 @@ extension UIPickerView {
     public func viewForRow(handler: @escaping (_ row: Int, _ component: Int, _ reusingView: UIView?) -> UIView) -> Self {
         return update { $0.viewForRow = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDelegate's pickerView(_:didSelectRow:inComponent:) method
      
@@ -495,7 +494,7 @@ extension UIPickerView {
     public func didSelectRow(handler: @escaping (_ row: Int, _ component: Int) -> Void) -> Self {
         return update { $0.didSelectRow = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDataSource's numberOfComponents(in:) method
      
@@ -507,7 +506,7 @@ extension UIPickerView {
     public func numberOfComponents(handler: @escaping () -> Int) -> Self {
         return update { $0.numberOfComponents = handler }
     }
-    
+
     /**
      Equivalent to implementing UIPickerViewDataSource's pickerView(_:numberOfRowsInComponent:) method
      
@@ -532,7 +531,7 @@ extension UIPickerView: DelegatorProtocol {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate/dataSource closures that were assigned to this
@@ -544,7 +543,7 @@ extension UIPickerView: DelegatorProtocol {
         DelegateWrapper.remove(delegator: self, from: &PickerViewDelegate.delegates)
         UIPickerView.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UIPickerView, _ delegate: PickerViewDelegate?) {
         delegator.delegate = nil
         delegator.dataSource = nil
@@ -552,4 +551,3 @@ extension UIPickerView: DelegatorProtocol {
         delegator.dataSource = delegate
     }
 }
-

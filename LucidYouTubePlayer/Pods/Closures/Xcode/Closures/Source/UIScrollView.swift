@@ -22,77 +22,77 @@ import UIKit
 
 class ScrollViewDelegate: NSObject, UIScrollViewDelegate, DelegateProtocol {
     fileprivate static var delegates = Set<DelegateWrapper<UIScrollView, ScrollViewDelegate>>()
-    
+
     fileprivate var didScroll: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         didScroll?(scrollView)
     }
-    
+
     fileprivate var didZoom: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         didZoom?(scrollView)
     }
-    
+
     fileprivate var willBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         willBeginDragging?(scrollView)
     }
-    
+
     fileprivate var willEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)?
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         willEndDragging?(scrollView, velocity, targetContentOffset)
     }
-    
+
     fileprivate var didEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         didEndDragging?(scrollView, decelerate)
     }
-    
+
     fileprivate var willBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         willBeginDecelerating?(scrollView)
     }
-    
+
     fileprivate var didEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         didEndDecelerating?(scrollView)
     }
-    
+
     fileprivate var didEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         didEndScrollingAnimation?(scrollView)
     }
-    
+
     fileprivate var viewForZoomingIn: ((_ scrollView: UIScrollView) -> UIView?)?
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return viewForZoomingIn?(scrollView)
     }
-    
+
     fileprivate var willBeginZooming: ((_ scrollView: UIScrollView, _ view: UIView?) -> Void)?
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         willBeginZooming?(scrollView, view)
     }
-    
+
     fileprivate var didEndZooming: ((_ scrollView: UIScrollView, _ view: UIView?, _ scale: CGFloat) -> Void)?
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         didEndZooming?(scrollView, view, scale)
     }
-    
+
     fileprivate var shouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         return shouldScrollToTop?(scrollView) ?? true
     }
-    
+
     fileprivate var didScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         didScrollToTop?(scrollView)
     }
-    
+
     fileprivate var didChangeAdjustedContentInset: ((_ scrollView: UIScrollView) -> Void)?
     func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
         didChangeAdjustedContentInset?(scrollView)
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
         case #selector(ScrollViewDelegate.scrollViewDidScroll(_:)):
@@ -142,7 +142,7 @@ extension UIScrollView {
     public func didScroll(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.didScroll = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidZoom(_:) method
      
@@ -154,7 +154,7 @@ extension UIScrollView {
     public func didZoom(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.didZoom = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewWillBeginDragging(_:) method
      
@@ -166,7 +166,7 @@ extension UIScrollView {
     public func willBeginDragging(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.willBeginDragging = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewWillEndDragging(_:) method
      
@@ -178,7 +178,7 @@ extension UIScrollView {
     public func willEndDragging(handler: @escaping (_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void) -> Self {
         return update { $0.willEndDragging = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidEndDragging(_:) method
      
@@ -190,7 +190,7 @@ extension UIScrollView {
     public func didEndDragging(handler: @escaping (_ scrollView: UIScrollView, _ decelerate: Bool) -> Void) -> Self {
         return update { $0.didEndDragging = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewWillBeginDecelerating(_:) method
      
@@ -202,7 +202,7 @@ extension UIScrollView {
     public func willBeginDecelerating(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.willBeginDecelerating = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidEndDecelerating(_:) method
      
@@ -214,7 +214,7 @@ extension UIScrollView {
     public func didEndDecelerating(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.didEndDecelerating = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidEndScrollingAnimation(_:) method
      
@@ -226,7 +226,7 @@ extension UIScrollView {
     public func didEndScrollingAnimation(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.didEndScrollingAnimation = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's viewForZooming(_:) method
      
@@ -238,7 +238,7 @@ extension UIScrollView {
     public func viewForZoomingIn(handler: @escaping (_ scrollView: UIScrollView) -> UIView?) -> Self {
         return update { $0.viewForZoomingIn = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewWillBeginZooming(_:) method
      
@@ -250,7 +250,7 @@ extension UIScrollView {
     public func willBeginZooming(handler: @escaping (_ scrollView: UIScrollView, _ view: UIView?) -> Void) -> Self {
         return update { $0.willBeginZooming = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidEndZooming(_:) method
      
@@ -262,7 +262,7 @@ extension UIScrollView {
     public func didEndZooming(handler: @escaping (_ scrollView: UIScrollView, _ view: UIView?, _ scale: CGFloat) -> Void) -> Self {
         return update { $0.didEndZooming = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewShouldScrollToTop(_:) method
      
@@ -274,7 +274,7 @@ extension UIScrollView {
     public func shouldScrollToTop(handler: @escaping (_ scrollView: UIScrollView) -> Bool) -> Self {
         return update { $0.shouldScrollToTop = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidScrollToTop(_:) method
      
@@ -286,7 +286,7 @@ extension UIScrollView {
     public func didScrollToTop(handler: @escaping (_ scrollView: UIScrollView) -> Void) -> Self {
         return update { $0.didScrollToTop = handler }
     }
-    
+
     /**
      Equivalent to implementing UIScrollView's scrollViewDidChangeAdjustedContentInset(_:) method
      
@@ -311,7 +311,7 @@ extension UIScrollView: DelegatorProtocol {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate closures that were assigned to this
@@ -323,7 +323,7 @@ extension UIScrollView: DelegatorProtocol {
         DelegateWrapper.remove(delegator: self, from: &ScrollViewDelegate.delegates)
         UIScrollView.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UIScrollView, _ delegate: ScrollViewDelegate?) {
         delegator.delegate = nil
         delegator.delegate = delegate

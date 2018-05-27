@@ -35,23 +35,23 @@ public protocol DelegatorProtocol: class {
 class DelegateWrapper<Delegator: DelegatorProtocol, Delegate: DelegateProtocol>: NSObject {
     weak var delegator: Delegator?
     let delegate: Delegate
-    
+
     init(delegator: Delegator, delegate: Delegate) {
         self.delegate = delegate
         self.delegator = delegator
     }
-    
+
     var tupac: Bool { return delegator == nil }
-    
+
     public static func wrapper(delegator: Delegator,
                                delegate: @autoclosure () -> Delegate,
-                               delegates:  inout Set<DelegateWrapper<Delegator,Delegate>>,
-                               bind: (_ delegator: Delegator, _ delegate: Delegate) -> Void) -> DelegateWrapper<Delegator,Delegate> {
-        var deadRappers = [DelegateWrapper<Delegator,Delegate>]()
+                               delegates:  inout Set<DelegateWrapper<Delegator, Delegate>>,
+                               bind: (_ delegator: Delegator, _ delegate: Delegate) -> Void) -> DelegateWrapper<Delegator, Delegate> {
+        var deadRappers = [DelegateWrapper<Delegator, Delegate>]()
         defer {
             delegates.subtract(deadRappers)
         }
-        
+
         if let wrapper = delegates.first(where: {
             // lazy, inaccurate cleanup.
             if $0.tupac {
@@ -62,31 +62,31 @@ class DelegateWrapper<Delegator: DelegatorProtocol, Delegate: DelegateProtocol>:
             return wrapper
         }
         let delegate = delegate()
-        let wrapper: DelegateWrapper<Delegator,Delegate> = DelegateWrapper(delegator: delegator, delegate: delegate)
+        let wrapper: DelegateWrapper<Delegator, Delegate> = DelegateWrapper(delegator: delegator, delegate: delegate)
         bind(delegator, delegate)
         delegates.insert(wrapper)
-        
+
         return wrapper
     }
-    
-    public static func remove(delegator: Delegator, from delegates: inout Set<DelegateWrapper<Delegator,Delegate>>) {
+
+    public static func remove(delegator: Delegator, from delegates: inout Set<DelegateWrapper<Delegator, Delegate>>) {
         if let wrapper = delegates.first(where: { $0.delegator === delegator }) {
             delegates.remove(wrapper)
         }
     }
-    
+
     public static func update(_ delegator: Delegator,
                               delegate: @autoclosure () -> Delegate,
-                              delegates:  inout Set<DelegateWrapper<Delegator,Delegate>>,
+                              delegates:  inout Set<DelegateWrapper<Delegator, Delegate>>,
                               bind: (_ delegator: Delegator, _ delegate: Delegate) -> Void,
-                              with updateHandler: (_ wrapper: DelegateWrapper<Delegator, Delegate>) -> Void)  {
+                              with updateHandler: (_ wrapper: DelegateWrapper<Delegator, Delegate>) -> Void) {
         let wrapper = self.wrapper(delegator: delegator, delegate: delegate, delegates: &delegates, bind: bind)
         updateHandler(wrapper)
         bind(delegator, wrapper.delegate)
     }
 }
 
-fileprivate class BundleHook {}
+private class BundleHook {}
 extension Bundle {
     static let closures = Bundle(for: BundleHook.self)
 }
@@ -98,18 +98,18 @@ extension String {
 extension NotificationCenter {
     static func selfObserve<T>(name: Notification.Name,
                                target: T,
-                               closure: @escaping (_ target: T, _ userInfo: [AnyHashable : Any]?) -> Void) where T: AnyObject {
+                               closure: @escaping (_ target: T, _ userInfo: [AnyHashable: Any]?) -> Void) where T: AnyObject {
         NotificationCenter.closures.selfObserve(name: name, target: target, closure: closure)
     }
-    
+
     func selfObserve<T>(name: Notification.Name,
                         target: T,
-                        closure: @escaping (_ target: T, _ userInfo: [AnyHashable : Any]?) -> Void) where T: AnyObject {
-        
+                        closure: @escaping (_ target: T, _ userInfo: [AnyHashable: Any]?) -> Void) where T: AnyObject {
+
         // Post a cleanup notification to remove any duplicates
         let cleanupKey = "com.vhesener.notificationkey.selfobserved.cleanup"
         post(name: name, object: target, userInfo: [cleanupKey: target])
-        
+
         var observer: NSObjectProtocol?
         observer = addObserver(
             forName: name,
@@ -141,22 +141,22 @@ extension NotificationCenter {
                 closure(target, $0.userInfo)
         }
     }
-    
+
     @discardableResult
     static func observeUntil<T>(
         _ removeCondition: @escaping (_ object: T?) -> Bool,
         object: T,
         name: Notification.Name,
-        closure: @escaping (_ object: T, _ userInfo: [AnyHashable : Any]?) -> Void) -> NSObjectProtocol where T: AnyObject {
+        closure: @escaping (_ object: T, _ userInfo: [AnyHashable: Any]?) -> Void) -> NSObjectProtocol where T: AnyObject {
         return NotificationCenter.closures.observeUntil(removeCondition, object: object, name: name, closure: closure)
     }
-    
+
     @discardableResult
     func observeUntil<T>(
         _ removeCondition: @escaping (_ object: T?) -> Bool,
         object: T,
         name: Notification.Name,
-        closure: @escaping (_ object: T, _ userInfo: [AnyHashable : Any]?) -> Void) -> NSObjectProtocol where T: AnyObject {
+        closure: @escaping (_ object: T, _ userInfo: [AnyHashable: Any]?) -> Void) -> NSObjectProtocol where T: AnyObject {
         var observer: NSObjectProtocol?
         observer = addObserver(
             forName: name,

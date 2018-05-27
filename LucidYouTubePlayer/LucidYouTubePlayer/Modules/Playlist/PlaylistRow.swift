@@ -9,7 +9,7 @@
 import UIKit
 import TinyConstraints
 
-final class PlaylistRow : UITableViewCell {
+final class PlaylistRow: UITableViewCell {
 
     // MARK: - Private properties
     private lazy var flowLayout: UICollectionViewFlowLayout = {
@@ -58,7 +58,7 @@ final class PlaylistRow : UITableViewCell {
     }
 }
 
-extension PlaylistRow : UICollectionViewDataSource {
+extension PlaylistRow: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
@@ -71,7 +71,7 @@ extension PlaylistRow : UICollectionViewDataSource {
     }
 }
 
-extension PlaylistRow : UICollectionViewDelegateFlowLayout {
+extension PlaylistRow: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow = 4.cgFloat
         let hardCodedPadding = 25.cgFloat
