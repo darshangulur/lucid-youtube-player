@@ -54,7 +54,7 @@ fileprivate extension Notification.Name {
 public func configure<T>(gesture: T, handler: @escaping (_ gesture: T) -> Void)
     where T: UIGestureRecognizer {
         gesture.addTarget(gesture, action: #selector(UIGestureRecognizer.gestureRecognized))
-        NotificationCenter.selfObserve(name: .gestureRecognized, target: gesture) { gesture,userInfo in
+        NotificationCenter.selfObserve(name: .gestureRecognized, target: gesture) { gesture, _ in
             handler(gesture)
         }
 }
@@ -345,37 +345,37 @@ extension UIView {
 
 fileprivate final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIGestureRecognizer, GestureRecognizerDelegate>>()
-    
+
     fileprivate var shouldBegin: (() -> Bool)?
     fileprivate func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return shouldBegin?() ?? true
     }
-    
+
     fileprivate var shouldRecognizeSimultaneouslyWith: ((_ otherGestureRecognizer: UIGestureRecognizer) -> Bool)?
     fileprivate func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return shouldRecognizeSimultaneouslyWith?(otherGestureRecognizer) ?? false
     }
-    
+
     fileprivate var shouldRequireFailureOf: ((_ otherGestureRecognizer: UIGestureRecognizer) -> Bool)?
     fileprivate func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return shouldRequireFailureOf?(otherGestureRecognizer) ?? false
     }
-    
+
     fileprivate var shouldBeRequiredToFailBy: ((_ otherGestureRecognizer: UIGestureRecognizer) -> Bool)?
     fileprivate func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return shouldBeRequiredToFailBy?(otherGestureRecognizer) ?? false
     }
-    
+
     fileprivate var shouldReceiveTouch: ((_ touch: UITouch) -> Bool)?
     fileprivate func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return shouldReceiveTouch?(touch) ?? true
     }
-    
+
     fileprivate var shouldReceivePress: ((_ press: UIPress) -> Bool)?
     fileprivate func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
         return shouldReceivePress?(press) ?? true
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
         case #selector(GestureRecognizerDelegate.gestureRecognizerShouldBegin(_:)):
@@ -409,7 +409,7 @@ extension UIGestureRecognizer {
     public func shouldBegin(handler: @escaping () -> Bool) -> Self {
         return update { $0.shouldBegin = handler }
     }
-    
+
     /**
      Equivalent to implementing UIGestureRecognizerDelegate's gestureRecognizer(:shouldRecognizeSimultaneouslyWith:) method
      
@@ -421,7 +421,7 @@ extension UIGestureRecognizer {
     public func shouldRecognizeSimultaneouslyWith(handler: @escaping (_ otherGestureRecognizer: UIGestureRecognizer) -> Bool) -> Self {
         return update { $0.shouldRecognizeSimultaneouslyWith = handler }
     }
-    
+
     /**
      Equivalent to implementing UIGestureRecognizerDelegate's gestureRecognizer(:shouldRequireFailureOf:) method
      
@@ -433,7 +433,7 @@ extension UIGestureRecognizer {
     public func shouldRequireFailureOf(handler: @escaping (_ otherGestureRecognizer: UIGestureRecognizer) -> Bool) -> Self {
         return update { $0.shouldRequireFailureOf = handler }
     }
-    
+
     /**
      Equivalent to implementing UIGestureRecognizerDelegate's gestureRecognizer(:shouldBeRequiredToFailBy:) method
      
@@ -445,7 +445,7 @@ extension UIGestureRecognizer {
     public func shouldBeRequiredToFailBy(handler: @escaping (_ otherGestureRecognizer: UIGestureRecognizer) -> Bool) -> Self {
         return update { $0.shouldBeRequiredToFailBy = handler }
     }
-    
+
     /**
      Equivalent to implementing UIGestureRecognizerDelegate's gestureRecognizer(:shouldReceive:) method
      
@@ -457,7 +457,7 @@ extension UIGestureRecognizer {
     public func shouldReceiveTouch(handler: @escaping (_ touch: UITouch) -> Bool) -> Self {
         return update { $0.shouldReceiveTouch = handler }
     }
-    
+
     /**
      Equivalent to implementing UIGestureRecognizerDelegate's gestureRecognizer(:shouldReceive:) method
      
@@ -482,7 +482,7 @@ extension UIGestureRecognizer: DelegatorProtocol {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate closures that were assigned to this
@@ -494,7 +494,7 @@ extension UIGestureRecognizer: DelegatorProtocol {
         DelegateWrapper.remove(delegator: self, from: &GestureRecognizerDelegate.delegates)
         UIGestureRecognizer.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UIGestureRecognizer, _ delegate: GestureRecognizerDelegate?) {
         delegator.delegate = nil
         delegator.delegate = delegate

@@ -22,7 +22,7 @@ import UIKit
 
 fileprivate extension UIControl {
     fileprivate func _onChange<ControlType, ValueType>(
-        callerHandler: @escaping (_ value: ValueType) -> (Void),
+        callerHandler: @escaping (_ value: ValueType) -> Void,
         valueHandler: @escaping (_ control: ControlType) -> (ValueType)) {
         on(.valueChanged) { control, _ in
             guard let castedControl = control as? ControlType else {
@@ -135,10 +135,10 @@ extension UIControl {
     @objc func allEvents(sender: UIControl, event: UIEvent?) {
         trigger(sender, event, for: .allEvents)
     }
-    
+
     /// Used to pass the event through the notification userInfo object
     private static let eventKey = String.namespace + ".notificcations.keys.event"
-    
+
     /**
      Provide a handler that will be called for UIControlEvents option passed in.
      
@@ -152,7 +152,7 @@ extension UIControl {
                                          object: self,
                                          userInfo: [UIControl.eventKey: event as Any])
     }
-    
+
     /**
      Creates a value for Notification that represents the event type
      
@@ -244,7 +244,7 @@ extension UIButton {
      */
     @discardableResult
     public func onTap(handler: @escaping () -> Void) -> Self {
-        on(.touchUpInside) { _,_ in
+        on(.touchUpInside) { _, _ in
             handler()
         }
         return self
@@ -287,7 +287,7 @@ extension UITextField {
         }
         return self
     }
-    
+
     /**
      A convenience method to respond to UIControlEvents.editingDidEnd for a UITextField.
      This occurs when the UITextField resigns as first responder.
@@ -298,12 +298,12 @@ extension UITextField {
      */
     @discardableResult
     public func onEditingEnded(handler: @escaping () -> Void) -> Self {
-        on(.editingDidEnd) { _,_ in
+        on(.editingDidEnd) { _, _ in
             handler()
         }
         return self
     }
-    
+
     /**
      A convenience method to respond to UIControlEvents.editingDidBegin for a UITextField.
      This occurs when the UITextField becomes the first responder.
@@ -314,12 +314,12 @@ extension UITextField {
      */
     @discardableResult
     public func onEditingBegan(handler: @escaping () -> Void) -> Self {
-        on(.editingDidBegin) { _,_ in
+        on(.editingDidBegin) { _, _ in
             handler()
         }
         return self
     }
-    
+
     /**
      A convenience method to respond to UIControlEvents.editingDidEndOnExit for a UITextField.
      This occurs when the user taps the return key on the keyboard.
@@ -330,7 +330,7 @@ extension UITextField {
      */
     @discardableResult
     public func onReturn(handler: @escaping () -> Void) -> Self {
-        on(.editingDidEndOnExit) { _,_ in
+        on(.editingDidEndOnExit) { _, _ in
             handler()
         }
         return self
@@ -351,7 +351,7 @@ extension UITextField {
     public func shouldBeginEditing(handler: @escaping () -> Bool) -> Self {
         return update { $0.shouldBeginEditing = handler }
     }
-    
+
     /**
      This method determines if the text field did begin editing. This is equivalent
      to implementing the textFieldDidBeginEditing(_:) method in UITextFieldDelegate.
@@ -364,7 +364,7 @@ extension UITextField {
     public func didBeginEditing(handler: @escaping () -> Void) -> Self {
         return update { $0.didBeginEditing = handler }
     }
-    
+
     /**
      This method determines if the text field should end editing. This is equivalent
      to implementing the textFieldShouldEndEditing(_:) method in UITextFieldDelegate.
@@ -377,7 +377,7 @@ extension UITextField {
     public func shouldEndEditing(handler: @escaping () -> Bool) -> Self {
         return update { $0.shouldEndEditing = handler }
     }
-    
+
     /**
      This method determines if the text field did end editing. This is equivalent
      to implementing the textFieldDidEndEditing(_:) method in UITextFieldDelegate.
@@ -390,7 +390,7 @@ extension UITextField {
     public func didEndEditing(handler: @escaping () -> Void) -> Self {
         return update { $0.didEndEditing = handler }
     }
-    
+
     /**
      This method determines if the text field should change its characters based on user input.
      This is equivalent to implementing the textField(_:shouldChangeCharactersIn:replacementString:) 
@@ -405,7 +405,7 @@ extension UITextField {
     public func shouldChangeCharacters(handler: @escaping (_ range: NSRange, _ replacementString: String) -> Bool) -> Self {
         return update { $0.shouldChangeCharacters = handler }
     }
-    
+
     /**
      This method determines if the text field should change its text based on user input.
      This is a convenience method around equivalent to implementing the 
@@ -420,7 +420,7 @@ extension UITextField {
      */
     @discardableResult
     public func shouldChangeString(handler: @escaping (_ from: String, _ to: String) -> Bool) -> Self {
-        return shouldChangeCharacters() { [weak self] range, string in
+        return shouldChangeCharacters { [weak self] range, string in
             guard let strongSelf = self,
                 let text = strongSelf.text else {
                     return true
@@ -429,7 +429,7 @@ extension UITextField {
             return handler(text, newString)
         }
     }
-    
+
     /**
      This method determines if the text field should remove its text. This is equivalent
      to implementing the textFieldShouldClear(_:) method in UITextFieldDelegate.
@@ -442,7 +442,7 @@ extension UITextField {
     public func shouldClear(handler: @escaping () -> Bool) -> Self {
         return update { $0.shouldClear = handler }
     }
-    
+
     /**
      This method determines if the text field should process the return button. This is equivalent
      to implementing the textFieldShouldReturn(_:) method in UITextFieldDelegate.
@@ -468,7 +468,7 @@ extension UITextField: DelegatorProtocol {
         }
         return self
     }
-    
+
     // MARK: Reset
     /**
      Clears any delegate closures that were assigned to this
@@ -480,7 +480,7 @@ extension UITextField: DelegatorProtocol {
         DelegateWrapper.remove(delegator: self, from: &TextFieldDelegate.delegates)
         UITextField.bind(self, nil)
     }
-    
+
     fileprivate static func bind(_ delegator: UITextField, _ delegate: TextFieldDelegate?) {
         delegator.delegate = nil
         delegator.delegate = delegate
@@ -495,46 +495,46 @@ var textFieldDelegates: Set<AnyHashable> {
 
 fileprivate final class TextFieldDelegate: NSObject, UITextFieldDelegate, DelegateProtocol {
     fileprivate static var delegates = Set<DelegateWrapper<UITextField, TextFieldDelegate>>()
-    
+
     override required init() {
         super.init()
     }
-    
+
     fileprivate var shouldBeginEditing: (() -> Bool)?
     fileprivate func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return shouldBeginEditing?() ?? true
     }
-    
+
     fileprivate var didBeginEditing: (() -> Void)?
     fileprivate func textFieldDidBeginEditing(_ textField: UITextField) {
         didBeginEditing?()
     }
-    
+
     fileprivate var shouldEndEditing: (() -> Bool)?
     fileprivate func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return shouldEndEditing?() ?? true
     }
-    
+
     fileprivate var didEndEditing: (() -> Void)?
     fileprivate func textFieldDidEndEditing(_ textField: UITextField) {
         didEndEditing?()
     }
-    
+
     fileprivate var shouldChangeCharacters: (( _ range: NSRange, _ replacementString: String) -> Bool)?
     fileprivate func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return shouldChangeCharacters?(range, string) ?? true
     }
-    
+
     fileprivate var shouldClear: (() -> Bool)?
     fileprivate func textFieldShouldClear(_ textField: UITextField) -> Bool {
         return shouldClear?() ?? true
     }
-    
+
     fileprivate var shouldReturn: (() -> Bool)?
-    fileprivate func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+    fileprivate func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return shouldReturn?() ?? true
     }
-    
+
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
         case #selector(TextFieldDelegate.textFieldShouldBeginEditing(_:)):
