@@ -46,9 +46,7 @@ final class PlaylistViewController: UIViewController {
     }
     
     @objc private func configureNewTapped(sender: UIBarButtonItem) {
-        let configureNewViewController =  ConfigureNewPlaylistViewController { [weak self] playlistId in
-            guard !playlistId.isEmpty else { return }
-            
+        let configureNewViewController =  ConfigureNewPlaylistViewController { [weak self] playlistId, completion in
             var playlistIds = [String]()
             if let storedPlaylistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") {
                 playlistIds.append(contentsOf: storedPlaylistIds)
@@ -57,9 +55,15 @@ final class PlaylistViewController: UIViewController {
             if !playlistIds.contains(playlistId) {
                 playlistIds.append(playlistId)
                 UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
-                self?.fetchPlaylist()
+                self?.fetchPlaylist { success in
+                    if success {
+                        self?.navigationController?.topViewController?.dismiss(animated: true)
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                }
             }
-            self?.navigationController?.topViewController?.dismiss(animated: true)
         }
         
         configureNewViewController.modalPresentationStyle = .popover
@@ -98,7 +102,7 @@ extension PlaylistViewController : UITableViewDelegate {
 }
 
 fileprivate extension PlaylistViewController {
-    private func fetchPlaylist() {
+    private func fetchPlaylist(completion: ((Bool) -> Void)? = nil) {
         guard var playlistIds = UserDefaults.standard.stringArray(forKey: "playlistIds") else { return }
         
         self.categories.removeAll()
@@ -118,6 +122,7 @@ fileprivate extension PlaylistViewController {
                 guard let response = playlistResponse, let firstItem = response.items.first else {
                     playlistIds.removeAll(playlistItem.element)
                     UserDefaults.standard.setValue(playlistIds, forKey: "playlistIds")
+                    completion?(false)
                     dispatchGroup.leave(); return
                 }
                 
@@ -130,6 +135,7 @@ fileprivate extension PlaylistViewController {
         dispatchGroup.notify(queue: .main) {
             self.tableView.reloadData()
             SVProgressHUD.dismiss()
+            completion?(true)
         }
     }
 }
