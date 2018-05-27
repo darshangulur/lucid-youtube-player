@@ -62,9 +62,10 @@ fileprivate extension AppDelegate {
     }
 
     func setUpLocalNotification() {
-        let date = Date(timeIntervalSinceNow: 10)
-        let triggerDaily = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
-        let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
+        var date = DateComponents()
+        date.hour = 18
+        date.minute = 0
+        let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
 
         let content = UNMutableNotificationContent()
         content.title = "Reminder"
