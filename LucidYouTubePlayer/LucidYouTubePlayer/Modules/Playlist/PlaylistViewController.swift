@@ -32,7 +32,7 @@ final class PlaylistViewController: UIViewController {
         self.view.backgroundColor = Stylesheet.Color.primaryWhite
         
         addSubViews()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+",
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                                  style: .done,
                                                                  target: self,
                                                                  action: #selector(configureNewTapped))
