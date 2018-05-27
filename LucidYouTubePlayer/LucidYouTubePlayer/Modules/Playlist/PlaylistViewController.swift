@@ -32,10 +32,7 @@ final class PlaylistViewController: UIViewController {
         self.view.backgroundColor = Stylesheet.Color.primaryWhite
         
         addSubViews()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
-                                                                 style: .done,
-                                                                 target: self,
-                                                                 action: #selector(configureNewTapped))
+        setupNavigationBar()
         fetchPlaylist()
     }
     
@@ -43,6 +40,16 @@ final class PlaylistViewController: UIViewController {
     private func addSubViews() {
         self.view.addSubview(tableView)
         tableView.edgesToSuperview()
+    }
+
+    private func setupNavigationBar() {
+        let imageView = UIImageView(image: UIImage(named: "logo"))
+        self.navigationItem.titleView = imageView
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
+                                                                 style: .done,
+                                                                 target: self,
+                                                                 action: #selector(configureNewTapped))
     }
     
     @objc private func configureNewTapped(sender: UIBarButtonItem) {
