@@ -48,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+// MARK: - Local Notifications
 fileprivate extension AppDelegate {
     func requestPermissionForLocalNotifications() {
         UNUserNotificationCenter.current()
@@ -85,13 +86,14 @@ fileprivate extension AppDelegate {
     }
 }
 
+// MARK: - UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let okayAction: UIAlertAction = UIAlertAction(title: "OK", style: .default) { alertAction in }
+        let okayAction: UIAlertAction = UIAlertAction(title: "Okay", style: .default) { alertAction in }
 
         let alert:UIAlertController = UIAlertController(
             title: notification.request.content.title,
