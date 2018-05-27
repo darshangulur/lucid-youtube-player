@@ -10,6 +10,12 @@ import UIKit
 import TinyConstraints
 import Closures
 
+enum ConfigureStatus {
+    case added
+    case invalid
+    case duplicate
+}
+
 final class ConfigureNewPlaylistViewController: UIViewController {
 
     private lazy var textField: UITextField = {
@@ -39,10 +45,10 @@ final class ConfigureNewPlaylistViewController: UIViewController {
         return $0
     }(UIButton(type: .custom))
 
-    private let configureHandler: ((String, (@escaping (Bool) -> Void)) -> Void)
+    private let configureHandler: ((String, (@escaping (ConfigureStatus) -> Void)) -> Void)
 
     // MARK: - Initializers
-    init(configureHandler: @escaping ((String, (@escaping (Bool) -> Void)) -> Void)) {
+    init(configureHandler: @escaping ((String, (@escaping (ConfigureStatus) -> Void)) -> Void)) {
         self.configureHandler = configureHandler
         super.init(nibName: nil, bundle: nil)
     }
@@ -87,7 +93,11 @@ final class ConfigureNewPlaylistViewController: UIViewController {
             }
 
             self?.configureHandler(playlistId) { status in
-                self?.titleLabel.text = !status ? "Couldn't fetch playlist for the url": ""
+                switch status {
+                case .added: self?.titleLabel.text = ""
+                case .invalid: self?.titleLabel.text = "Couldn't fetch playlist for the url"
+                case .duplicate: self?.titleLabel.text = "Playlist already present. Add a different one."
+                }
             }
         }
     }

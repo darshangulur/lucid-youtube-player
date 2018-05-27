@@ -28,7 +28,7 @@ final class PlaylistViewController: UIViewController {
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Playlist"
+        self.title = "Playlists"
         self.view.backgroundColor = Stylesheet.Color.primaryWhite
         
         addSubViews()
@@ -58,11 +58,13 @@ final class PlaylistViewController: UIViewController {
                 self?.fetchPlaylist { success in
                     if success {
                         self?.navigationController?.topViewController?.dismiss(animated: true)
-                        completion(true)
+                        completion(.added)
                     } else {
-                        completion(false)
+                        completion(.invalid)
                     }
                 }
+            } else {
+                completion(.duplicate)
             }
         }
         
