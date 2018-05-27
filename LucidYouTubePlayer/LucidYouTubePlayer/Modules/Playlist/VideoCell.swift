@@ -19,6 +19,12 @@ final class VideoCell : UICollectionViewCell {
         return $0
     }(UIImageView())
 
+    private lazy var playerImageView: UIImageView = {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "playerIcon")
+        return $0
+    }(UIImageView())
+
     private lazy var titleLabel: UILabel = {
         $0.numberOfLines = 2
         $0.font = Stylesheet.Font.title
@@ -51,10 +57,14 @@ final class VideoCell : UICollectionViewCell {
 
     // MARK: - Private functions
     private func addSubviews() {
-        self.contentView.addSubviews([imageView, titleLabel, descriptionLabel])
+        self.contentView.addSubviews([imageView, playerImageView, titleLabel, descriptionLabel])
 
         imageView.edgesToSuperview(excluding: .bottom)
         imageView.height(150)
+
+        playerImageView.size(CGSize(width: 46, height: 36))
+        playerImageView.left(to: imageView)
+        playerImageView.bottom(to: imageView)
 
         titleLabel.edgesToSuperview(excluding: [.top, .bottom])
         titleLabel.topToBottom(of: imageView, offset: 10)
