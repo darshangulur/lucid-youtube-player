@@ -62,7 +62,7 @@ final class ConfigureNewPlaylistViewController: UIViewController {
         super.viewDidLoad()
         addSubviews()
         bindActions()
-        textField.text = "https://www.youtube.com/watch?v=VYOjWnS4cMY&list=PLx0sYbCqOb8QTF1DCJVfQrtWknZFzuoAE"
+        textField.text = ""
     }
 
     // MARK: - Private functions
